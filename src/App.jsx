@@ -290,13 +290,13 @@ const App = () => {
       <header className="bg-gray-700 p-4 sticky top-0 z-50 border-b border-yellow-600/30 shadow-md">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-             <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
+             <img src="/BPK.png" alt="Logo BPK" className="w-16 h-16 rounded-full object-contain flex-shrink-0" />
              <div className="min-w-0">
                <h1 className="font-semibold text-sm text-yellow-400">Event Guidebook</h1>
                <p className="text-xs leading-tight text-gray-300 mt-0.5">Entry Meeting Pemeriksaan LKPD Tahun 2025 di Lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI Badan Pemeriksa Keuangan</p>
              </div>
           </div>
-          <img src="/SINER6I.png" alt="Logo Sinergi" className="h-8 object-contain flex-shrink-0 ml-1" />
+          <img src="/SINER6I.png" alt="Logo Sinergi" className="h-14 object-contain flex-shrink-0 ml-1" />
         </div>
       </header>
 
