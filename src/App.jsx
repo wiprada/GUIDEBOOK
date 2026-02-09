@@ -73,26 +73,21 @@ const App = () => {
   );
 
   const FooterSection = () => (
-    <div className="mt-8 mb-2 space-y-3">
-      <div className="flex flex-col items-center gap-2 text-xs text-gray-500">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-gray-600">BPK RI</span>
-          <span className="text-gray-300">|</span>
-          <a href="https://www.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bpk.go.id</a>
-          <span className="text-gray-300">|</span>
-          <a href="https://www.instagram.com/bpkriofficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
-            <InstagramIcon className="w-4 h-4" />
-          </a>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-gray-600">BPK Bali</span>
-          <span className="text-gray-300">|</span>
-          <a href="https://www.bali.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bali.bpk.go.id</a>
-          <span className="text-gray-300">|</span>
-          <a href="https://www.instagram.com/bpkribali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
-            <InstagramIcon className="w-4 h-4" />
-          </a>
-        </div>
+    <div className="mt-8 mb-2 space-y-2">
+      <div className="flex items-center justify-center gap-2 flex-wrap text-xs text-gray-500">
+        <span className="font-medium text-gray-600">BPK RI</span>
+        <span className="text-gray-300">|</span>
+        <a href="https://www.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bpk.go.id</a>
+        <a href="https://www.instagram.com/bpkriofficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+          <InstagramIcon className="w-4 h-4" />
+        </a>
+        <span className="text-gray-300">-</span>
+        <span className="font-medium text-gray-600">BPK Bali</span>
+        <span className="text-gray-300">|</span>
+        <a href="https://www.bali.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bali.bpk.go.id</a>
+        <a href="https://www.instagram.com/bpkribali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+          <InstagramIcon className="w-4 h-4" />
+        </a>
       </div>
       <p className="text-center text-xs text-gray-400">&copy; 2026 - Data Analytics Center BPK BALI</p>
     </div>
