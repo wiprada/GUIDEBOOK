@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Clock, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -57,13 +57,48 @@ const App = () => {
   }
 
   const UkiranCorner = ({ className, rotate = 0 }) => (
-    <div className={`absolute w-24 h-24 pointer-events-none z-0 opacity-20 ${className}`} style={{ transform: `rotate(${rotate}deg)` }}>
-      <svg viewBox="0 0 100 100" fill="currentColor" className="text-yellow-600">
-        <path d="M10,10 C30,10 40,20 50,40 C60,20 70,10 90,10 C80,30 70,50 90,90 C70,70 50,70 50,50 C50,70 30,70 10,90 C30,50 20,30 10,10 Z M50,50 C45,45 45,55 50,60 C55,55 55,45 50,50 Z" />
-        <path d="M0,0 Q50,0 50,50 Q0,50 0,0" fill="none" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="20" cy="20" r="3" />
-        <circle cx="80" cy="20" r="2" />
-        <circle cx="20" cy="80" r="2" />
+    <div className={`absolute w-28 h-28 pointer-events-none z-0 opacity-15 ${className}`} style={{ transform: `rotate(${rotate}deg)` }}>
+      <svg viewBox="0 0 200 200" fill="none" className="text-yellow-700">
+        {/* Patra Punggel - Balinese ornamental carving */}
+        <g fill="currentColor" opacity="0.8">
+          {/* Main spiral leaf */}
+          <path d="M20,180 C20,120 40,80 80,60 C60,80 50,110 55,140 C60,110 75,85 100,70 C80,90 70,115 75,140 C80,115 95,95 115,82 C100,98 92,118 95,138 C100,118 112,100 130,90 C115,102 108,120 112,140" />
+          {/* Curling tip */}
+          <path d="M130,90 C140,82 155,78 170,80 C160,85 152,92 148,102 C158,92 168,88 178,88 C168,95 162,105 160,115 C165,105 172,98 182,96 C174,102 168,112 166,124 C170,116 176,110 184,108 C178,114 174,122 173,132" />
+          {/* Inner curl detail */}
+          <path d="M55,140 C52,155 54,168 62,178 C58,165 60,152 68,142 C65,155 68,168 76,175 C72,165 73,152 80,145" />
+          {/* Small decorative buds */}
+          <ellipse cx="35" cy="170" rx="8" ry="12" transform="rotate(-20 35 170)" />
+          <ellipse cx="170" cy="80" rx="5" ry="8" transform="rotate(30 170 80)" />
+          <circle cx="185" cy="105" r="4" />
+          <circle cx="62" cy="180" r="3" />
+        </g>
+        {/* Fine line details */}
+        <g stroke="currentColor" strokeWidth="1" opacity="0.4">
+          <path d="M25,175 Q60,100 120,75" fill="none" />
+          <path d="M30,170 Q65,105 125,80" fill="none" />
+          <path d="M135,88 Q160,80 175,85" fill="none" />
+        </g>
+      </svg>
+    </div>
+  );
+
+  const PatraPunggel = ({ className }) => (
+    <div className={`absolute w-32 h-32 pointer-events-none z-0 opacity-10 ${className}`}>
+      <svg viewBox="0 0 200 200" fill="none" className="text-yellow-700">
+        <g fill="currentColor">
+          <path d="M180,20 C180,60 160,90 130,110 C150,95 158,72 155,48 C148,72 135,92 115,105 C132,88 142,68 138,45 C130,68 118,85 100,98 C115,82 122,62 118,42 C112,62 100,78 85,88 C98,75 105,58 100,40" />
+          <path d="M85,88 C75,96 62,100 48,98 C58,92 65,84 68,74 C58,82 50,86 40,86 C50,80 55,72 56,62 C52,70 46,76 38,78 C44,72 48,64 49,54 C46,60 42,66 36,68 C40,62 43,54 44,45" />
+          <path d="M155,48 C158,35 155,22 148,14 C152,25 150,36 144,44 C146,32 143,22 136,16 C140,25 138,36 132,42" />
+          <ellipse cx="175" cy="25" rx="8" ry="12" transform="rotate(20 175 25)" />
+          <ellipse cx="45" cy="95" rx="5" ry="8" transform="rotate(-30 45 95)" />
+          <circle cx="34" cy="72" r="4" />
+          <circle cx="150" cy="12" r="3" />
+        </g>
+        <g stroke="currentColor" strokeWidth="1" opacity="0.5">
+          <path d="M175,25 Q145,80 90,100" fill="none" />
+          <path d="M170,30 Q140,85 85,95" fill="none" />
+        </g>
       </svg>
     </div>
   );
@@ -105,8 +140,8 @@ const App = () => {
             <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-600/30 bg-white" />
           </div>
           <div>
-            <h1 className="text-xl font-serif text-gray-800 tracking-widest mb-2">OM SWASTIASTU</h1>
-            <p className="text-gray-800 text-xl font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <h1 className="text-xl font-serif text-gray-800 tracking-widest mb-2">Om Swastiastu</h1>
+            <p className="text-gray-800 text-lg font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
             <p className="text-gray-800 text-xl font-serif tracking-wide mb-3">Shalom</p>
             <p className="text-yellow-700 text-sm tracking-widest uppercase font-semibold">Badan Pemeriksa Keuangan</p>
           </div>
@@ -129,7 +164,6 @@ const App = () => {
           </div>
           <div className="text-right flex-shrink-0 ml-2">
             <p className="text-yellow-400 text-sm font-medium">12 Februari 2026</p>
-            <p className="text-xs text-gray-300">BPK Perwakilan Provinsi Bali</p>
           </div>
         </div>
       </header>
@@ -141,9 +175,8 @@ const App = () => {
             {/* Welcome Card */}
             <div className="relative bg-white rounded-2xl p-6 overflow-hidden border border-yellow-600/20 shadow-md">
               <EndekPattern />
-              <UkiranCorner className="top-0 right-0" rotate={90} />
+              <PatraPunggel className="top-0 right-0" />
               <div className="relative z-10">
-                <h2 className="text-2xl font-serif text-yellow-700 mb-2">Om Swastiastu</h2>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025. 
                   Semoga pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
@@ -151,17 +184,21 @@ const App = () => {
               </div>
             </div>
 
-            {/* Quick Info */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                <MapPin className="w-5 h-5 text-yellow-700 mb-2" />
-                <p className="text-sm font-medium">Lokasi</p>
-                <p className="text-xs text-gray-500">BPK Perwakilan Provinsi Bali</p>
-              </div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                <Clock className="w-5 h-5 text-yellow-700 mb-2" />
-                <p className="text-sm font-medium">Waktu</p>
-                <p className="text-xs text-gray-500">13:30 WITA - Selesai</p>
+            {/* Lokasi */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <img src="/Gedung%20BPK%20Bali.png" alt="Gedung BPK Perwakilan Provinsi Bali" className="w-full h-40 object-cover" />
+              <div className="p-4">
+                <p className="font-medium flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-yellow-700" />
+                  BPK Perwakilan Provinsi Bali
+                </p>
+                <button
+                  onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
+                  className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Buka di Google Maps
+                </button>
               </div>
             </div>
 
