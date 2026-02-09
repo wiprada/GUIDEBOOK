@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter, Video } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -9,6 +9,15 @@ const App = () => {
   const [subpageData, setSubpageData] = useState([]);
   const [subpageLoading, setSubpageLoading] = useState(false);
   const [filters, setFilters] = useState({});
+  const [openAgendaIndex, setOpenAgendaIndex] = useState(null);
+  const [isRundownOpen, setIsRundownOpen] = useState(false);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
+  const [isVenueOpen, setIsVenueOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('default');
+
+  const toggleAgenda = (index) => {
+    setOpenAgendaIndex(openAgendaIndex === index ? null : index);
+  };
 
   const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
   const BPK_COORDS = { lat: -8.6725, lng: 115.2323 };
@@ -67,6 +76,7 @@ const App = () => {
     setSubpageLoading(true);
     setSubpageData([]);
     setFilters({}); // Reset filters
+    setSortBy('default'); // Reset sort
     try {
       const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?gid=${cat.gid}&single=true&output=csv`;
       const res = await fetch(url);
@@ -257,6 +267,40 @@ const App = () => {
     return true;
   });
 
+  const processedData = filteredData.map(item => {
+    let distanceVal = null;
+    let distanceLabel = null;
+    
+    // Try calculate distance
+    const lat = parseFloat((item['Latitude'] || item['Lat'] || '').replace(',', '.'));
+    const lng = parseFloat((item['Longitude'] || item['Long'] || item['Lng'] || '').replace(',', '.'));
+    const location = item['Location'] || item['Lokasi'] || '';
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+      distanceVal = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, lat, lng);
+      distanceLabel = distanceVal.toFixed(2).replace('.', ',');
+    } else if (location && location.includes('google.com/maps')) {
+        const match = location.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || location.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+        if (match) {
+          const urlLat = parseFloat(match[1]);
+          const urlLng = parseFloat(match[2]);
+          distanceVal = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, urlLat, urlLng);
+          distanceLabel = distanceVal.toFixed(2).replace('.', ',');
+        }
+    }
+    return { ...item, _dist: distanceVal, _distLabel: distanceLabel };
+  });
+
+  const sortedData = [...processedData].sort((a, b) => {
+    if (sortBy === 'distance') {
+      if (a._dist === null && b._dist === null) return 0;
+      if (a._dist === null) return 1;
+      if (b._dist === null) return -1;
+      return a._dist - b._dist;
+    }
+    return 0;
+  });
+
   // Splash Screen
   if (loading || showSplash) {
     return (
@@ -293,7 +337,10 @@ const App = () => {
              <img src="/BPK.png" alt="Logo BPK" className="w-16 h-16 rounded-full object-contain flex-shrink-0" />
              <div className="min-w-0">
                <h1 className="font-semibold text-sm text-yellow-400">Event Guidebook</h1>
-               <p className="text-xs leading-tight text-gray-300 mt-0.5">Entry Meeting Pemeriksaan LKPD Tahun 2025 di Lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI Badan Pemeriksa Keuangan</p>
+               <p className="text-xs leading-tight text-gray-300 mt-0.5">
+                 Entry Meeting Pemeriksaan LKPD Tahun 2025<br />
+                 di Lingkungan DJPKN VI BPK
+               </p>
              </div>
           </div>
           <img src="/SINER6I.png" alt="Logo Sinergi" className="h-14 object-contain flex-shrink-0 ml-1" />
@@ -307,7 +354,7 @@ const App = () => {
             {/* Welcome Card */}
             <div className="relative bg-white rounded-2xl p-6 overflow-hidden border border-yellow-600/20 shadow-md">
               <EndekPattern />
-              <PatraPunggel className="top-0 right-0" />
+              <BungaJepunCorner className="top-0 right-0" rotate={90} /> 
               <div className="relative z-10">
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025. 
@@ -316,41 +363,130 @@ const App = () => {
               </div>
             </div>
 
-            {/* Lokasi */}
+            {/* Lokasi Removed from Home */}
+            
+            <FooterSection />
+          </div>
+        )}
+
+        {activeTab === 'acara' && (
+          <div className="space-y-6">
+             {/* Collapsible Venue Section */}
             <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-              <img src="/Gedung%20BPK%20Bali.png" alt="Gedung BPK Perwakilan Provinsi Bali" className="w-full h-40 object-cover" />
-              <div className="p-4">
-                <p className="font-medium flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-yellow-700" />
-                  BPK Perwakilan Provinsi Bali
-                </p>
-                <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
-                  <Calendar className="w-4 h-4 text-yellow-700" />
-                  12 Februari 2026
-                </p>
-                <button
-                  onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
-                  className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200"
+                <button 
+                    onClick={() => setIsVenueOpen(!isVenueOpen)}
+                    className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
                 >
-                  <ExternalLink className="w-4 h-4" />
-                  Buka di Google Maps
+                    <span className="flex items-center gap-2 font-semibold text-lg">
+                        <MapPin className="w-5 h-5 text-yellow-700" />
+                        Venue
+                    </span>
+                    <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isVenueOpen ? 'rotate-90' : ''}`} />
                 </button>
-              </div>
+                <div className={`transition-all duration-300 ease-in-out ${isVenueOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                  <img src="/Gedung%20BPK%20Bali.png" alt="Gedung BPK Perwakilan Provinsi Bali" className="w-full h-40 object-cover" />
+                  <div className="p-4">
+                    <p className="font-medium flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-yellow-700" />
+                      BPK Perwakilan Provinsi Bali
+                    </p>
+                    <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
+                      <Calendar className="w-4 h-4 text-yellow-700" />
+                      12 Februari 2026
+                    </p>
+                    <button
+                      onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
+                      className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200 hover:bg-yellow-100 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Buka di Google Maps
+                    </button>
+                  </div>
+                </div>
             </div>
 
-            {/* Agenda */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-yellow-700" />
-                Rundown Acara
-              </h3>
-              <div className="space-y-3">
-                {agenda.map((item, index) => (
-                  <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-start gap-4">
-                    <span className="text-yellow-700 text-xs font-mono flex-shrink-0 w-24 pt-0.5">{item.time}</span>
-                    <p className="font-medium text-sm text-gray-700">{item.title}</p>
-                  </div>
-                ))}
+            {/* Link Zoom Meeting */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <button 
+                    onClick={() => setIsZoomOpen(!isZoomOpen)}
+                    className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+                >
+                    <span className="flex items-center gap-2 font-semibold text-lg">
+                        <Video className="w-5 h-5 text-blue-600" />
+                        Link Zoom Meeting
+                    </span>
+                    <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isZoomOpen ? 'rotate-90' : ''}`} />
+                </button>
+                <div className={`transition-all duration-300 ease-in-out ${isZoomOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                    <div className="p-4 pt-0">
+                        <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 space-y-2 mb-3">
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-gray-600">Meeting ID:</span>
+                                <span className="font-mono font-medium text-gray-800">948 3645 2132</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-gray-600">Passcode:</span>
+                                <span className="font-mono font-medium text-gray-800">164904</span>
+                            </div>
+                        </div>
+                        <a 
+                            href="https://zoom.us/j/94836452132?pwd=164904" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors"
+                        >
+                            <Video className="w-4 h-4" />
+                            Join Zoom Meeting
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {/* Collapsible Rundown Section */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <button 
+                onClick={() => setIsRundownOpen(!isRundownOpen)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+              >
+                 <span className="flex items-center gap-2 font-semibold text-lg">
+                    <Calendar className="w-5 h-5 text-yellow-700" />
+                    Rundown dan Materi Kegiatan
+                 </span>
+                 <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isRundownOpen ? 'rotate-90' : ''}`} />
+              </button>
+              
+              <div className={`transition-all duration-300 ease-in-out ${isRundownOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className="p-4 pt-0 space-y-2">
+                  {agenda.map((item, index) => (
+                    <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                      <button
+                        onClick={() => toggleAgenda(index)}
+                        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="text-yellow-700 text-xs font-mono font-bold pt-0.5 min-w-[5.5rem] whitespace-nowrap">{item.time}</span>
+                          <span className="font-medium text-sm text-gray-800 line-clamp-1">{item.title}</span>
+                        </div>
+                        <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${openAgendaIndex === index ? 'rotate-90' : ''}`} />
+                      </button>
+                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                        <div className="p-4 pt-0 bg-gray-50 border-t border-gray-100 text-sm text-gray-600">
+                          <p className="font-medium text-gray-800 mb-2">{item.title}</p>
+                          <div className="space-y-1 text-xs">
+                            <p className="flex items-center gap-2">
+                              <MapPin className="w-3 h-3 text-yellow-700" />
+                              Aula BPK Perwakilan Provinsi Bali
+                            </p>
+                            <p className="flex items-center gap-2">
+                              <Info className="w-3 h-3 text-yellow-700" />
+                              Harap hadir 15 menit sebelum acara dimulai.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <FooterSection />
@@ -397,9 +533,19 @@ const App = () => {
                 {/* Filter Section */}
                 {!subpageLoading && subpageData.length > 0 && (
                   <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm mb-4">
-                    <div className="flex items-center gap-2 mb-2 text-sm font-medium text-gray-700">
-                      <Filter className="w-4 h-4" />
-                      Filter
+                    <div className="flex items-center justify-between mb-2">
+                       <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                         <Filter className="w-4 h-4" />
+                         Filter & Urutkan
+                       </div>
+                       <select 
+                          value={sortBy} 
+                          onChange={(e) => setSortBy(e.target.value)}
+                          className="text-xs bg-gray-50 border border-gray-200 text-gray-700 rounded-lg px-2 py-1 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                        >
+                           <option value="default">Default</option>
+                           <option value="distance">Terdekat (Jarak)</option>
+                        </select>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {exploreFilter === 'hotel' && (
@@ -473,12 +619,12 @@ const App = () => {
                       <Loader2 className="w-8 h-8 animate-spin mb-2" />
                       <p className="text-sm">Memuat data...</p>
                     </div>
-                  ) : filteredData.length === 0 ? (
+                  ) : sortedData.length === 0 ? (
                     <div className="text-center py-12 text-gray-400">
                       <p className="text-sm">Belum ada data.</p>
                     </div>
                   ) : (
-                    filteredData.map((item, index) => {
+                    sortedData.map((item, index) => {
                       const name = item['Name'] || item['Nama'] || '';
                       const location = item['Location'] || item['Lokasi'] || '';
                       const area = item['Area'] || item['Wilayah'] || '';
@@ -491,23 +637,8 @@ const App = () => {
                       const starRating = parseInt(item['Star'] || item['Bintang'] || '0');
                       const isNonHalal = (item['Contain NonHalal Food'] || '').toLowerCase() === 'true';
 
-                      let distance = null;
-                      // Try to get coordinates from dedicated columns
-                      const lat = parseFloat((item['Latitude'] || item['Lat'] || '').replace(',', '.'));
-                      const lng = parseFloat((item['Longitude'] || item['Long'] || item['Lng'] || '').replace(',', '.'));
-                      
-                      if (!isNaN(lat) && !isNaN(lng)) {
-                        distance = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, lat, lng).toFixed(2).replace('.', ',');
-                      } else if (location && location.includes('google.com/maps')) {
-                         // Try to extract from Google Maps URL if possible (basic implementation)
-                         // Format: @-8.6725,115.2323 or q=-8.6725,115.2323
-                         const match = location.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || location.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/);
-                         if (match) {
-                           const urlLat = parseFloat(match[1]);
-                           const urlLng = parseFloat(match[2]);
-                           distance = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, urlLat, urlLng).toFixed(2).replace('.', ',');
-                         }
-                      }
+                      // Distance pre-calculated
+                      const distance = item._distLabel;
 
                       return (
                         <div key={index} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col relative">
@@ -535,14 +666,7 @@ const App = () => {
                           <div className="p-4 flex-1 flex flex-col">
                             <div className="flex items-start justify-between gap-2">
                               <div className="flex-1 min-w-0">
-                                <div className="flex justify-between items-start">
-                                  <p className="font-medium text-sm text-gray-800">{name}</p>
-                                  {distance && (
-                                    <span className="text-xs font-mono text-yellow-700 bg-yellow-50 px-1.5 py-0.5 rounded border border-yellow-200 whitespace-nowrap ml-2">
-                                      {distance} km
-                                    </span>
-                                  )}
-                                </div>
+                                <p className="font-medium text-sm text-gray-800">{name}</p>
                                 {exploreFilter === 'hotel' && starRating > 0 && (
                                   <div className="flex items-center gap-0.5 mt-1">
                                     {[...Array(5)].map((_, i) => (
@@ -572,7 +696,7 @@ const App = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="flex gap-2 p-4 pt-0 mt-auto">
+                          <div className="flex items-center gap-2 p-4 pt-0 mt-auto">
                             <button
                               onClick={() => openMap(location || name)}
                               className="flex-1 bg-yellow-50 text-yellow-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-yellow-200"
@@ -588,6 +712,11 @@ const App = () => {
                                 <Phone className="w-3.5 h-3.5" />
                                 Hubungi
                               </a>
+                            )}
+                            {distance && (
+                              <span className="text-xs font-mono text-yellow-700 bg-yellow-50 px-2 py-1.5 rounded-lg border border-yellow-200 whitespace-nowrap">
+                                ±{distance} km
+                              </span>
                             )}
                           </div>
                         </div>
@@ -638,6 +767,7 @@ const App = () => {
         <div className="flex justify-around">
           {[
             { id: 'home', icon: Home, label: 'Beranda' },
+            { id: 'acara', icon: Calendar, label: 'Acara' },
             { id: 'explore', icon: MapPin, label: 'Jelajah' },
             { id: 'info', icon: Info, label: 'Info' },
           ].map((tab) => (
