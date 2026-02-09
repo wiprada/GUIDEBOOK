@@ -1,11 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2 } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
-  const [exploreFilter, setExploreFilter] = useState('all');
+  const [exploreFilter, setExploreFilter] = useState('hotel');
+  const [sheetsData, setSheetsData] = useState({ hotel: [], kuliner: [], wisata: [], transportasi: [], faskes: [] });
+  const [sheetsLoading, setSheetsLoading] = useState(true);
+
+  const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
+  const SHEETS = ['Hotel', 'Kuliner', 'Wisata', 'Transportasi', 'Faskes'];
+
+  const parseCSV = (csv) => {
+    const lines = csv.split('\n');
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    return lines.slice(1).filter(line => line.trim()).map(line => {
+      const values = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        if (line[i] === '"') { inQuotes = !inQuotes; }
+        else if (line[i] === ',' && !inQuotes) { values.push(current.trim()); current = ''; }
+        else { current += line[i]; }
+      }
+      values.push(current.trim());
+      const obj = {};
+      headers.forEach((h, i) => { obj[h] = values[i] || ''; });
+      return obj;
+    });
+  };
+
+  useEffect(() => {
+    const fetchSheets = async () => {
+      setSheetsLoading(true);
+      const results = {};
+      await Promise.all(SHEETS.map(async (sheet) => {
+        try {
+          const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?sheet=${encodeURIComponent(sheet)}&output=csv`;
+          const res = await fetch(url);
+          const csv = await res.text();
+          results[sheet.toLowerCase()] = parseCSV(csv);
+        } catch (e) {
+          console.error(`Error fetching ${sheet}:`, e);
+          results[sheet.toLowerCase()] = [];
+        }
+      }));
+      setSheetsData(results);
+      setSheetsLoading(false);
+    };
+    fetchSheets();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,15 +78,7 @@ const App = () => {
     { time: '16.15 – 16.20', title: 'Penutup' },
   ];
 
-  const exploreData = [
-    { id: 1, type: 'venue', name: 'The Meru Sanur', desc: 'Lokasi Utama Acara. Hotel bintang 5 di jantung Sanur.', address: 'Jl. Hang Tuah, Sanur Kaja', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop', mapQuery: 'The Meru Sanur' },
-    { id: 2, type: 'wisata', name: 'Pantai Sanur', desc: 'Pantai matahari terbit yang tenang, cocok untuk jalan pagi sebelum acara.', address: '5 min dari lokasi', image: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=800&auto=format&fit=crop', mapQuery: 'Pantai Sanur' },
-    { id: 3, type: 'wisata', name: 'Monumen Bajra Sandhi', desc: 'Monumen perjuangan rakyat Bali dengan arsitektur memukau.', address: 'Renon, Denpasar', image: 'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?q=80&w=800&auto=format&fit=crop', mapQuery: 'Bajra Sandhi Monument' },
-    { id: 4, type: 'kuliner', name: 'Warung Mak Beng', desc: 'Legenda sup kepala ikan dan ikan goreng sejak 1941.', address: 'Jl. Hang Tuah No.45', image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=800&auto=format&fit=crop', mapQuery: 'Warung Mak Beng' },
-    { id: 5, type: 'kuliner', name: 'Nasi Bali Men Weti', desc: 'Nasi campur Bali autentik yang sangat populer di Sanur.', address: 'Jl. Segara Ayu', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=800&auto=format&fit=crop', mapQuery: 'Warung Men Weti' },
-    { id: 6, type: 'cafe', name: 'Kopi Bali House', desc: 'Tempat ngopi nyaman dengan nuansa seni dan kopi lokal terbaik.', address: 'Jl. By Pass Ngurah Rai', image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop', mapQuery: 'Kopi Bali House' },
-    { id: 7, type: 'cafe', name: 'Canvas Cafe', desc: 'Cafe modern dengan suasana tenang untuk meeting santai.', address: 'Sanur area', image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop', mapQuery: 'Canvas Cafe Sanur' },
-  ];
+  const exploreData = [];
 
   const openMap = (query) => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
 
@@ -113,16 +151,14 @@ const App = () => {
   );
 
   const filterTypes = [
-    { id: 'all', label: 'Semua', icon: LayoutGrid },
-    { id: 'venue', label: 'Venue', icon: Home },
-    { id: 'wisata', label: 'Wisata', icon: Palmtree },
+    { id: 'hotel', label: 'Hotel', icon: Hotel },
     { id: 'kuliner', label: 'Kuliner', icon: Utensils },
-    { id: 'cafe', label: 'Cafe', icon: Coffee },
+    { id: 'wisata', label: 'Wisata', icon: Palmtree },
+    { id: 'transportasi', label: 'Transportasi', icon: Car },
+    { id: 'faskes', label: 'Faskes', icon: Cross },
   ];
 
-  const filteredExplore = exploreFilter === 'all' 
-    ? exploreData 
-    : exploreData.filter(item => item.type === exploreFilter);
+  const currentSheetData = sheetsData[exploreFilter] || [];
 
   // Splash Screen
   if (loading || showSplash) {
@@ -155,15 +191,11 @@ const App = () => {
     <div className="min-h-screen bg-gray-100 text-gray-800 pb-20">
       {/* Header */}
       <header className="bg-gray-700 p-4 sticky top-0 z-50 border-b border-yellow-600/30 shadow-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
-            <div className="min-w-0">
-              <h1 className="font-semibold text-xs leading-tight text-white">Guidebook Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Ditjen PKN VI BPK</h1>
-            </div>
-          </div>
-          <div className="text-right flex-shrink-0 ml-2">
-            <p className="text-yellow-400 text-sm font-medium">12 Februari 2026</p>
+        <div className="flex items-center gap-3">
+          <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
+          <div className="min-w-0">
+            <h1 className="font-semibold text-sm text-yellow-400">Event Guidebook</h1>
+            <p className="text-xs leading-tight text-gray-300 mt-0.5">Entry Meeting Pemeriksaan LKPD Tahun 2025 di Lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI Badan Pemeriksa Keuangan</p>
           </div>
         </div>
       </header>
@@ -191,6 +223,10 @@ const App = () => {
                 <p className="font-medium flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-yellow-700" />
                   BPK Perwakilan Provinsi Bali
+                </p>
+                <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
+                  <Calendar className="w-4 h-4 text-yellow-700" />
+                  12 Februari 2026
                 </p>
                 <button
                   onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
@@ -225,7 +261,7 @@ const App = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <MapPin className="w-5 h-5 text-yellow-700" />
-              Eksplorasi Sekitar
+              Jelajah Sekitar
             </h3>
 
             {/* Filter */}
@@ -247,31 +283,70 @@ const App = () => {
             </div>
 
             {/* Cards */}
-            <div className="space-y-4">
-              {filteredExplore.map((item) => (
-                <div key={item.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-                  <img src={item.image} alt={item.name} className="w-full h-40 object-cover" />
-                  <div className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-medium">{item.name}</p>
-                        <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
-                        <p className="text-xs text-yellow-700 mt-2 flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {item.address}
-                        </p>
+            <div className="space-y-3">
+              {sheetsLoading ? (
+                <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                  <Loader2 className="w-8 h-8 animate-spin mb-2" />
+                  <p className="text-sm">Memuat data...</p>
+                </div>
+              ) : currentSheetData.length === 0 ? (
+                <div className="text-center py-12 text-gray-400">
+                  <p className="text-sm">Belum ada data.</p>
+                </div>
+              ) : (
+                currentSheetData.map((item, index) => {
+                  const name = item['Name'] || item['Nama'] || '';
+                  const location = item['Location'] || item['Lokasi'] || '';
+                  const area = item['Area'] || item['Wilayah'] || '';
+                  const category = item['Category'] || item['Jenis Makanan'] || item['Jenis Hiburan'] || item['Kelas'] || '';
+                  const contact = item['Contact Person'] || item['Kontak Person'] || '';
+                  const phone = item['Phone'] || item['No HP'] || item['Nomor HP'] || '';
+
+                  return (
+                    <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm text-gray-800">{name}</p>
+                          {(category || area) && (
+                            <div className="flex flex-wrap gap-1 mt-1.5">
+                              {category && (
+                                <span className="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full border border-yellow-200">{category}</span>
+                              )}
+                              {area && (
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{area}</span>
+                              )}
+                            </div>
+                          )}
+                          {contact && (
+                            <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-1">
+                              <User className="w-3 h-3" />
+                              {contact}{phone ? ` · ${phone}` : ''}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-2 mt-3">
+                        <button
+                          onClick={() => openMap(location || name)}
+                          className="flex-1 bg-yellow-50 text-yellow-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-yellow-200"
+                        >
+                          <MapPin className="w-3.5 h-3.5" />
+                          Maps
+                        </button>
+                        {phone && (
+                          <a
+                            href={`tel:${phone}`}
+                            className="flex-1 bg-gray-50 text-gray-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-gray-200"
+                          >
+                            <Phone className="w-3.5 h-3.5" />
+                            Hubungi
+                          </a>
+                        )}
                       </div>
                     </div>
-                    <button
-                      onClick={() => openMap(item.mapQuery)}
-                      className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Buka di Google Maps
-                    </button>
-                  </div>
-                </div>
-              ))}
+                  );
+                })
+              )}
             </div>
             <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
           </div>
@@ -314,7 +389,7 @@ const App = () => {
         <div className="flex justify-around">
           {[
             { id: 'home', icon: Home, label: 'Beranda' },
-            { id: 'explore', icon: MapPin, label: 'Eksplorasi' },
+            { id: 'explore', icon: MapPin, label: 'Jelajah' },
             { id: 'info', icon: Info, label: 'Info' },
           ].map((tab) => (
             <button
