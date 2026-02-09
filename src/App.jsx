@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2 } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
-  const [exploreFilter, setExploreFilter] = useState('hotel');
-  const [sheetsData, setSheetsData] = useState({ hotel: [], kuliner: [], wisata: [], transportasi: [], faskes: [] });
-  const [sheetsLoading, setSheetsLoading] = useState(true);
+  const [exploreFilter, setExploreFilter] = useState(null);
+  const [subpageData, setSubpageData] = useState([]);
+  const [subpageLoading, setSubpageLoading] = useState(false);
 
   const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
-  const SHEETS = ['Hotel', 'Kuliner', 'Wisata', 'Transportasi', 'Faskes'];
+
+  const categories = [
+    { id: 'hotel', label: 'Hotel', icon: Hotel, gid: '330243896', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+    { id: 'kuliner', label: 'Kuliner', icon: Utensils, gid: '1093702390', color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    { id: 'wisata', label: 'Wisata', icon: Palmtree, gid: '1544863673', color: 'bg-green-50 text-green-700 border-green-200' },
+    { id: 'transportasi', label: 'Transportasi', icon: Car, gid: '5347229', color: 'bg-purple-50 text-purple-700 border-purple-200' },
+    { id: 'faskes', label: 'Faskes', icon: Cross, gid: '254214115', color: 'bg-red-50 text-red-700 border-red-200' },
+  ];
 
   const parseCSV = (csv) => {
     const lines = csv.split('\n');
@@ -33,33 +40,63 @@ const App = () => {
   };
 
   useEffect(() => {
-    const fetchSheets = async () => {
-      setSheetsLoading(true);
-      const results = {};
-      await Promise.all(SHEETS.map(async (sheet) => {
-        try {
-          const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?sheet=${encodeURIComponent(sheet)}&output=csv`;
-          const res = await fetch(url);
-          const csv = await res.text();
-          results[sheet.toLowerCase()] = parseCSV(csv);
-        } catch (e) {
-          console.error(`Error fetching ${sheet}:`, e);
-          results[sheet.toLowerCase()] = [];
-        }
-      }));
-      setSheetsData(results);
-      setSheetsLoading(false);
-    };
-    fetchSheets();
-  }, []);
-
-  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
       setTimeout(() => setShowSplash(false), 500); 
     }, 2500);
     return () => clearTimeout(timer);
   }, []);
+
+  const openSubpage = async (categoryId) => {
+    const cat = categories.find(c => c.id === categoryId);
+    if (!cat) return;
+    setExploreFilter(categoryId);
+    setSubpageLoading(true);
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?gid=${cat.gid}&single=true&output=csv`;
+      const res = await fetch(url);
+      const csv = await res.text();
+      setSubpageData(parseCSV(csv));
+    } catch (e) {
+      console.error(`Error fetching ${categoryId}:`, e);
+      setSubpageData([]);
+    }
+    setSubpageLoading(false);
+  };
+
+  const InstagramIcon = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+
+  const FooterSection = () => (
+    <div className="mt-8 mb-2 space-y-3">
+      <div className="flex flex-col items-center gap-2 text-xs text-gray-500">
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-gray-600">BPK RI</span>
+          <span className="text-gray-300">|</span>
+          <a href="https://www.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bpk.go.id</a>
+          <span className="text-gray-300">|</span>
+          <a href="https://www.instagram.com/bpkriofficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+            <InstagramIcon className="w-4 h-4" />
+          </a>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-gray-600">BPK Bali</span>
+          <span className="text-gray-300">|</span>
+          <a href="https://www.bali.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bali.bpk.go.id</a>
+          <span className="text-gray-300">|</span>
+          <a href="https://www.instagram.com/bpkribali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+            <InstagramIcon className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+      <p className="text-center text-xs text-gray-400">&copy; 2026 - Data Analytics Center BPK BALI</p>
+    </div>
+  );
 
   // --- DATA SECTIONS ---
 
@@ -150,15 +187,9 @@ const App = () => {
     </div>
   );
 
-  const filterTypes = [
-    { id: 'hotel', label: 'Hotel', icon: Hotel },
-    { id: 'kuliner', label: 'Kuliner', icon: Utensils },
-    { id: 'wisata', label: 'Wisata', icon: Palmtree },
-    { id: 'transportasi', label: 'Transportasi', icon: Car },
-    { id: 'faskes', label: 'Faskes', icon: Cross },
-  ];
+  const filterTypes = categories;
 
-  const currentSheetData = sheetsData[exploreFilter] || [];
+  const activeCat = categories.find(c => c.id === exploreFilter);
 
   // Splash Screen
   if (loading || showSplash) {
@@ -253,102 +284,115 @@ const App = () => {
                 ))}
               </div>
             </div>
-            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
+            <FooterSection />
           </div>
         )}
 
         {activeTab === 'explore' && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-yellow-700" />
-              Jelajah Sekitar
-            </h3>
-
-            {/* Filter */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {filterTypes.map((filter) => (
+            {!exploreFilter ? (
+              /* Category Grid */
+              <>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-yellow-700" />
+                  Jelajah Sekitar
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => openSubpage(cat.id)}
+                      className={`flex flex-col items-center justify-center gap-3 p-6 rounded-xl border shadow-sm transition-all active:scale-95 ${cat.color}`}
+                    >
+                      <cat.icon className="w-8 h-8" />
+                      <span className="font-medium text-sm">{cat.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              /* Subpage */
+              <>
                 <button
-                  key={filter.id}
-                  onClick={() => setExploreFilter(filter.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all ${
-                    exploreFilter === filter.id
-                      ? 'bg-yellow-600 text-white'
-                      : 'bg-white text-gray-600 border border-gray-200 shadow-sm'
-                  }`}
+                  onClick={() => { setExploreFilter(null); setSubpageData([]); }}
+                  className="flex items-center gap-2 text-yellow-700 font-medium text-sm mb-1"
                 >
-                  <filter.icon className="w-4 h-4" />
-                  {filter.label}
+                  <ArrowLeft className="w-4 h-4" />
+                  Kembali
                 </button>
-              ))}
-            </div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  {activeCat && <activeCat.icon className="w-5 h-5 text-yellow-700" />}
+                  {activeCat?.label}
+                </h3>
 
-            {/* Cards */}
-            <div className="space-y-3">
-              {sheetsLoading ? (
-                <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-                  <Loader2 className="w-8 h-8 animate-spin mb-2" />
-                  <p className="text-sm">Memuat data...</p>
-                </div>
-              ) : currentSheetData.length === 0 ? (
-                <div className="text-center py-12 text-gray-400">
-                  <p className="text-sm">Belum ada data.</p>
-                </div>
-              ) : (
-                currentSheetData.map((item, index) => {
-                  const name = item['Name'] || item['Nama'] || '';
-                  const location = item['Location'] || item['Lokasi'] || '';
-                  const area = item['Area'] || item['Wilayah'] || '';
-                  const category = item['Category'] || item['Jenis Makanan'] || item['Jenis Hiburan'] || item['Kelas'] || '';
-                  const contact = item['Contact Person'] || item['Kontak Person'] || '';
-                  const phone = item['Phone'] || item['No HP'] || item['Nomor HP'] || '';
+                <div className="space-y-3">
+                  {subpageLoading ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                      <Loader2 className="w-8 h-8 animate-spin mb-2" />
+                      <p className="text-sm">Memuat data...</p>
+                    </div>
+                  ) : subpageData.length === 0 ? (
+                    <div className="text-center py-12 text-gray-400">
+                      <p className="text-sm">Belum ada data.</p>
+                    </div>
+                  ) : (
+                    subpageData.map((item, index) => {
+                      const name = item['Name'] || item['Nama'] || '';
+                      const location = item['Location'] || item['Lokasi'] || '';
+                      const area = item['Area'] || item['Wilayah'] || '';
+                      const category = item['Category'] || item['Jenis Makanan'] || item['Jenis Hiburan'] || item['Kelas'] || '';
+                      const contact = item['Contact Person'] || item['Kontak Person'] || '';
+                      const phone = item['Phone'] || item['No HP'] || item['Nomor HP'] || '';
 
-                  return (
-                    <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-gray-800">{name}</p>
-                          {(category || area) && (
-                            <div className="flex flex-wrap gap-1 mt-1.5">
-                              {category && (
-                                <span className="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full border border-yellow-200">{category}</span>
+                      return (
+                        <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm text-gray-800">{name}</p>
+                              {(category || area) && (
+                                <div className="flex flex-wrap gap-1 mt-1.5">
+                                  {category && (
+                                    <span className="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full border border-yellow-200">{category}</span>
+                                  )}
+                                  {area && (
+                                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{area}</span>
+                                  )}
+                                </div>
                               )}
-                              {area && (
-                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{area}</span>
+                              {contact && (
+                                <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-1">
+                                  <User className="w-3 h-3" />
+                                  {contact}{phone ? ` · ${phone}` : ''}
+                                </p>
                               )}
                             </div>
-                          )}
-                          {contact && (
-                            <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-1">
-                              <User className="w-3 h-3" />
-                              {contact}{phone ? ` · ${phone}` : ''}
-                            </p>
-                          )}
+                          </div>
+                          <div className="flex gap-2 mt-3">
+                            <button
+                              onClick={() => openMap(location || name)}
+                              className="flex-1 bg-yellow-50 text-yellow-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-yellow-200"
+                            >
+                              <MapPin className="w-3.5 h-3.5" />
+                              Maps
+                            </button>
+                            {phone && (
+                              <a
+                                href={`tel:${phone}`}
+                                className="flex-1 bg-gray-50 text-gray-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-gray-200"
+                              >
+                                <Phone className="w-3.5 h-3.5" />
+                                Hubungi
+                              </a>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex gap-2 mt-3">
-                        <button
-                          onClick={() => openMap(location || name)}
-                          className="flex-1 bg-yellow-50 text-yellow-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-yellow-200"
-                        >
-                          <MapPin className="w-3.5 h-3.5" />
-                          Maps
-                        </button>
-                        {phone && (
-                          <a
-                            href={`tel:${phone}`}
-                            className="flex-1 bg-gray-50 text-gray-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-gray-200"
-                          >
-                            <Phone className="w-3.5 h-3.5" />
-                            Hubungi
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
+                      );
+                    })
+                  )}
+                </div>
+              </>
+            )}
+            <FooterSection />
           </div>
         )}
 
@@ -379,7 +423,7 @@ const App = () => {
                 persepsi dan menyepakati jadwal pemeriksaan.
               </p>
             </div>
-            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
+            <FooterSection />
           </div>
         )}
       </main>
