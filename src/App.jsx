@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -10,6 +10,18 @@ const App = () => {
   const [subpageLoading, setSubpageLoading] = useState(false);
 
   const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
+  const BPK_COORDS = { lat: -8.6725, lng: 115.2323 };
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
 
   const categories = [
     { id: 'hotel', label: 'Hotel', icon: Hotel, gid: '330243896', color: 'bg-blue-50 text-blue-700 border-blue-200' },
@@ -17,7 +29,7 @@ const App = () => {
     { id: 'wisata', label: 'Wisata', icon: Palmtree, gid: '1544863673', color: 'bg-green-50 text-green-700 border-green-200' },
     { id: 'transportasi', label: 'Transportasi', icon: Car, gid: '5347229', color: 'bg-purple-50 text-purple-700 border-purple-200' },
     { id: 'faskes', label: 'Faskes', icon: Cross, gid: '254214115', color: 'bg-red-50 text-red-700 border-red-200' },
-  ];
+  ].filter(cat => cat.gid !== '0');
 
   const parseCSV = (csv) => {
     const lines = csv.split('\n');
@@ -74,20 +86,34 @@ const App = () => {
 
   const FooterSection = () => (
     <div className="mt-8 mb-2 space-y-2">
-      <div className="flex items-center justify-center gap-2 flex-wrap text-xs text-gray-500">
-        <span className="font-medium text-gray-600">BPK RI</span>
+      <div className="flex items-center justify-center gap-4 flex-wrap text-xs text-gray-500">
+        {/* BPK RI */}
+        <div className="flex items-center gap-2">
+          <a href="https://www.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline font-medium">bpk.go.id</a>
+          <div className="flex items-center gap-1">
+            <a href="https://www.instagram.com/bpkriofficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a href="https://www.youtube.com/@BPKRIOfficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-red-600">
+              <Youtube className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
         <span className="text-gray-300">|</span>
-        <a href="https://www.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bpk.go.id</a>
-        <a href="https://www.instagram.com/bpkriofficial" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
-          <InstagramIcon className="w-4 h-4" />
-        </a>
-        <span className="text-gray-300">-</span>
-        <span className="font-medium text-gray-600">BPK Bali</span>
-        <span className="text-gray-300">|</span>
-        <a href="https://www.bali.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline">www.bali.bpk.go.id</a>
-        <a href="https://www.instagram.com/bpkribali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
-          <InstagramIcon className="w-4 h-4" />
-        </a>
+
+        {/* BPK Bali */}
+        <div className="flex items-center gap-2">
+          <a href="https://www.bali.bpk.go.id" target="_blank" rel="noopener noreferrer" className="text-yellow-700 hover:underline font-medium">bali.bpk.go.id</a>
+          <div className="flex items-center gap-1">
+            <a href="https://www.instagram.com/bpkribali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600">
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a href="https://www.youtube.com/@bpkperwakilanprovinsibali" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-red-600">
+              <Youtube className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
       </div>
       <p className="text-center text-xs text-gray-400">&copy; 2026 - Data Analytics Center BPK BALI</p>
     </div>
@@ -126,28 +152,17 @@ const App = () => {
     )
   }
 
-  const UkiranCorner = ({ className, rotate = 0 }) => (
-    <div className={`absolute w-28 h-28 pointer-events-none z-0 opacity-15 ${className}`} style={{ transform: `rotate(${rotate}deg)` }}>
-      <svg viewBox="0 0 200 200" fill="none" className="text-yellow-700">
-        {/* Patra Punggel - Balinese ornamental carving */}
+  const BungaJepunCorner = ({ className, rotate = 0 }) => (
+    <div className={`absolute w-32 h-32 pointer-events-none z-0 opacity-20 ${className}`} style={{ transform: `rotate(${rotate}deg)` }}>
+      <svg viewBox="0 0 100 100" fill="none" className="text-yellow-700">
         <g fill="currentColor" opacity="0.8">
-          {/* Main spiral leaf */}
-          <path d="M20,180 C20,120 40,80 80,60 C60,80 50,110 55,140 C60,110 75,85 100,70 C80,90 70,115 75,140 C80,115 95,95 115,82 C100,98 92,118 95,138 C100,118 112,100 130,90 C115,102 108,120 112,140" />
-          {/* Curling tip */}
-          <path d="M130,90 C140,82 155,78 170,80 C160,85 152,92 148,102 C158,92 168,88 178,88 C168,95 162,105 160,115 C165,105 172,98 182,96 C174,102 168,112 166,124 C170,116 176,110 184,108 C178,114 174,122 173,132" />
-          {/* Inner curl detail */}
-          <path d="M55,140 C52,155 54,168 62,178 C58,165 60,152 68,142 C65,155 68,168 76,175 C72,165 73,152 80,145" />
-          {/* Small decorative buds */}
-          <ellipse cx="35" cy="170" rx="8" ry="12" transform="rotate(-20 35 170)" />
-          <ellipse cx="170" cy="80" rx="5" ry="8" transform="rotate(30 170 80)" />
-          <circle cx="185" cy="105" r="4" />
-          <circle cx="62" cy="180" r="3" />
-        </g>
-        {/* Fine line details */}
-        <g stroke="currentColor" strokeWidth="1" opacity="0.4">
-          <path d="M25,175 Q60,100 120,75" fill="none" />
-          <path d="M30,170 Q65,105 125,80" fill="none" />
-          <path d="M135,88 Q160,80 175,85" fill="none" />
+           {/* Bunga Jepun (Frangipani) / Kamboja - 5 Petals */}
+           {[0, 72, 144, 216, 288].map((angle, i) => (
+             <path key={i} transform={`rotate(${angle} 50 50)`} 
+               d="M50,50 C55,40 70,25 70,10 C70,0 55,-5 45,5 C40,15 45,40 50,50" 
+             />
+           ))}
+           <circle cx="50" cy="50" r="4" fill="#FEF08A" opacity="0.8"/>
         </g>
       </svg>
     </div>
@@ -191,10 +206,10 @@ const App = () => {
     return (
       <div className={`fixed inset-0 z-[60] bg-gradient-to-b from-gray-100 to-gray-200 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
         <div className="absolute inset-0 overflow-hidden">
-          <UkiranCorner className="top-0 left-0" rotate={0} />
-          <UkiranCorner className="top-0 right-0" rotate={90} />
-          <UkiranCorner className="bottom-0 right-0" rotate={180} />
-          <UkiranCorner className="bottom-0 left-0" rotate={270} />
+          <BungaJepunCorner className="top-0 left-0" rotate={0} />
+          <BungaJepunCorner className="top-0 right-0" rotate={90} />
+          <BungaJepunCorner className="bottom-0 right-0" rotate={180} />
+          <BungaJepunCorner className="bottom-0 left-0" rotate={270} />
         </div>
         <div className="text-center space-y-6 animate-pulse-slow relative z-10">
           <div className="relative w-24 h-24 mx-auto">
@@ -202,10 +217,10 @@ const App = () => {
             <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-600/30 bg-white" />
           </div>
           <div>
+            <p className="text-yellow-700 text-sm tracking-widest uppercase font-semibold mb-4">Badan Pemeriksa Keuangan</p>
             <h1 className="text-xl font-serif text-gray-800 tracking-widest mb-2">Om Swastiastu</h1>
             <p className="text-gray-800 text-lg font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
             <p className="text-gray-800 text-xl font-serif tracking-wide mb-3">Shalom</p>
-            <p className="text-yellow-700 text-sm tracking-widest uppercase font-semibold">Badan Pemeriksa Keuangan</p>
           </div>
         </div>
       </div>
@@ -338,31 +353,72 @@ const App = () => {
                       const category = item['Category'] || item['Jenis Makanan'] || item['Jenis Hiburan'] || item['Kelas'] || '';
                       const contact = item['Contact Person'] || item['Kontak Person'] || '';
                       const phone = item['Phone'] || item['No HP'] || item['Nomor HP'] || '';
+                      const imageLink = item['Image Link'] || item['Image'] || item['Gambar'] || item['Foto'] || '';
+                      
+                      let distance = null;
+                      // Try to get coordinates from dedicated columns
+                      const lat = parseFloat((item['Latitude'] || item['Lat'] || '').replace(',', '.'));
+                      const lng = parseFloat((item['Longitude'] || item['Long'] || item['Lng'] || '').replace(',', '.'));
+                      
+                      if (!isNaN(lat) && !isNaN(lng)) {
+                        distance = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, lat, lng).toFixed(2).replace('.', ',');
+                      } else if (location && location.includes('google.com/maps')) {
+                         // Try to extract from Google Maps URL if possible (basic implementation)
+                         // Format: @-8.6725,115.2323 or q=-8.6725,115.2323
+                         const match = location.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || location.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+                         if (match) {
+                           const urlLat = parseFloat(match[1]);
+                           const urlLng = parseFloat(match[2]);
+                           distance = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, urlLat, urlLng).toFixed(2).replace('.', ',');
+                         }
+                      }
 
                       return (
-                        <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="flex-1 min-w-0">
-                              <p className="font-medium text-sm text-gray-800">{name}</p>
-                              {(category || area) && (
-                                <div className="flex flex-wrap gap-1 mt-1.5">
-                                  {category && (
-                                    <span className="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full border border-yellow-200">{category}</span>
-                                  )}
-                                  {area && (
-                                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{area}</span>
+                        <div key={index} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col">
+                          {imageLink && (
+                            <div className="w-full h-32 overflow-hidden bg-gray-100">
+                               <img 
+                                src={imageLink} 
+                                alt={name} 
+                                className="w-full h-full object-cover transition-transform hover:scale-105" 
+                                onError={(e) => {
+                                  e.target.style.display = 'none'; // Hide if broken
+                                  e.target.parentElement.style.display = 'none';
+                                }}
+                               />
+                            </div>
+                          )}
+                          <div className="p-4 flex-1 flex flex-col">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex justify-between items-start">
+                                  <p className="font-medium text-sm text-gray-800">{name}</p>
+                                  {distance && (
+                                    <span className="text-xs font-mono text-yellow-700 bg-yellow-50 px-1.5 py-0.5 rounded border border-yellow-200 whitespace-nowrap ml-2">
+                                      {distance} km
+                                    </span>
                                   )}
                                 </div>
-                              )}
-                              {contact && (
-                                <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-1">
-                                  <User className="w-3 h-3" />
-                                  {contact}{phone ? ` · ${phone}` : ''}
-                                </p>
-                              )}
+                                {(category || area) && (
+                                  <div className="flex flex-wrap gap-1 mt-1.5">
+                                    {category && (
+                                      <span className="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full border border-yellow-200">{category}</span>
+                                    )}
+                                    {area && (
+                                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{area}</span>
+                                    )}
+                                  </div>
+                                )}
+                                {contact && (
+                                  <p className="text-xs text-gray-500 mt-1.5 flex items-center gap-1">
+                                    <User className="w-3 h-3" />
+                                    {contact}{phone ? ` · ${phone}` : ''}
+                                  </p>
+                                )}
+                              </div>
                             </div>
                           </div>
-                          <div className="flex gap-2 mt-3">
+                          <div className="flex gap-2 p-4 pt-0 mt-auto">
                             <button
                               onClick={() => openMap(location || name)}
                               className="flex-1 bg-yellow-50 text-yellow-700 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 border border-yellow-200"
