@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -8,6 +8,7 @@ const App = () => {
   const [exploreFilter, setExploreFilter] = useState(null);
   const [subpageData, setSubpageData] = useState([]);
   const [subpageLoading, setSubpageLoading] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
   const BPK_COORDS = { lat: -8.6725, lng: 115.2323 };
@@ -64,6 +65,8 @@ const App = () => {
     if (!cat) return;
     setExploreFilter(categoryId);
     setSubpageLoading(true);
+    setSubpageData([]);
+    setFilters({}); // Reset filters
     try {
       const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?gid=${cat.gid}&single=true&output=csv`;
       const res = await fetch(url);
@@ -201,6 +204,59 @@ const App = () => {
 
   const activeCat = categories.find(c => c.id === exploreFilter);
 
+  // Helper to extract unique values for filters
+  const getUniqueValues = (keyVariants) => {
+    const values = new Set();
+    subpageData.forEach(item => {
+      for (const key of keyVariants) {
+        if (item[key]) {
+          values.add(item[key]);
+          break; // Found the key for this item
+        }
+      }
+    });
+    return Array.from(values).sort();
+  };
+
+  const filteredData = subpageData.filter(item => {
+    // Hotel Filters
+    if (exploreFilter === 'hotel') {
+      // Area Filter
+      if (filters.area) {
+        const itemArea = item['Area'] || item['Wilayah'];
+        if (itemArea !== filters.area) return false;
+      }
+      // Star Filter
+      if (filters.star) {
+        const itemStar = item['Star'] || item['Bintang'];
+        if (String(itemStar) !== filters.star) return false;
+      }
+    }
+    // Wisata Filters
+    if (exploreFilter === 'wisata') {
+      // Category Filter
+      if (filters.category) {
+        const itemCat = item['Category'] || item['Jenis Wisata'] || item['Kategori'];
+        if (itemCat !== filters.category) return false;
+      }
+    }
+    // Kuliner Filters
+    if (exploreFilter === 'kuliner') {
+      // Category Filter
+      if (filters.category) {
+        const itemCat = item['Category'] || item['Jenis Makanan'] || item['Kategori'];
+        if (itemCat !== filters.category) return false;
+      }
+      // NonHalal Filter
+      if (filters.nonHalal && filters.nonHalal !== 'all') {
+        const isNonHalal = (item['Contain NonHalal Food'] || '').toLowerCase() === 'true';
+        if (filters.nonHalal === 'halal' && isNonHalal) return false;
+        if (filters.nonHalal === 'nonhalal' && !isNonHalal) return false;
+      }
+    }
+    return true;
+  });
+
   // Splash Screen
   if (loading || showSplash) {
     return (
@@ -232,12 +288,15 @@ const App = () => {
     <div className="min-h-screen bg-gray-100 text-gray-800 pb-20">
       {/* Header */}
       <header className="bg-gray-700 p-4 sticky top-0 z-50 border-b border-yellow-600/30 shadow-md">
-        <div className="flex items-center gap-3">
-          <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
-          <div className="min-w-0">
-            <h1 className="font-semibold text-sm text-yellow-400">Event Guidebook</h1>
-            <p className="text-xs leading-tight text-gray-300 mt-0.5">Entry Meeting Pemeriksaan LKPD Tahun 2025 di Lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI Badan Pemeriksa Keuangan</p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+             <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
+             <div className="min-w-0">
+               <h1 className="font-semibold text-sm text-yellow-400">Event Guidebook</h1>
+               <p className="text-xs leading-tight text-gray-300 mt-0.5">Entry Meeting Pemeriksaan LKPD Tahun 2025 di Lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI Badan Pemeriksa Keuangan</p>
+             </div>
           </div>
+          <img src="/SINER6I.png" alt="Logo Sinergi" className="h-8 object-contain flex-shrink-0 ml-1" />
         </div>
       </header>
 
@@ -335,18 +394,91 @@ const App = () => {
                   {activeCat?.label}
                 </h3>
 
+                {/* Filter Section */}
+                {!subpageLoading && subpageData.length > 0 && (
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm mb-4">
+                    <div className="flex items-center gap-2 mb-2 text-sm font-medium text-gray-700">
+                      <Filter className="w-4 h-4" />
+                      Filter
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {exploreFilter === 'hotel' && (
+                        <>
+                          <select 
+                            className="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2"
+                            value={filters.area || ''}
+                            onChange={(e) => setFilters({...filters, area: e.target.value})}
+                          >
+                            <option value="">Semua Area</option>
+                            {getUniqueValues(['Area', 'Wilayah']).map(val => (
+                              <option key={val} value={val}>{val}</option>
+                            ))}
+                          </select>
+                          <select 
+                            className="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2"
+                            value={filters.star || ''}
+                            onChange={(e) => setFilters({...filters, star: e.target.value})}
+                          >
+                            <option value="">Semua Bintang</option>
+                            {getUniqueValues(['Star', 'Bintang']).map(val => (
+                              <option key={val} value={val}>{val} Bintang</option>
+                            ))}
+                          </select>
+                        </>
+                      )}
+
+                      {exploreFilter === 'wisata' && (
+                         <select 
+                            className="col-span-2 bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2"
+                            value={filters.category || ''}
+                            onChange={(e) => setFilters({...filters, category: e.target.value})}
+                          >
+                            <option value="">Semua Kategori</option>
+                            {getUniqueValues(['Category', 'Jenis Wisata', 'Kategori']).map(val => (
+                              <option key={val} value={val}>{val}</option>
+                            ))}
+                          </select>
+                      )}
+
+                      {exploreFilter === 'kuliner' && (
+                        <>
+                         <select 
+                            className="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2"
+                            value={filters.category || ''}
+                            onChange={(e) => setFilters({...filters, category: e.target.value})}
+                          >
+                            <option value="">Semua Kategori</option>
+                            {getUniqueValues(['Category', 'Jenis Makanan', 'Kategori']).map(val => (
+                              <option key={val} value={val}>{val}</option>
+                            ))}
+                          </select>
+                          <select 
+                            className="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2"
+                            value={filters.nonHalal || 'all'}
+                            onChange={(e) => setFilters({...filters, nonHalal: e.target.value})}
+                          >
+                            <option value="all">Semua Tipe</option>
+                            <option value="halal">Halal</option>
+                            <option value="nonhalal">Non-Halal</option>
+                          </select>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-3">
                   {subpageLoading ? (
                     <div className="flex flex-col items-center justify-center py-12 text-gray-400">
                       <Loader2 className="w-8 h-8 animate-spin mb-2" />
                       <p className="text-sm">Memuat data...</p>
                     </div>
-                  ) : subpageData.length === 0 ? (
+                  ) : filteredData.length === 0 ? (
                     <div className="text-center py-12 text-gray-400">
                       <p className="text-sm">Belum ada data.</p>
                     </div>
                   ) : (
-                    subpageData.map((item, index) => {
+                    filteredData.map((item, index) => {
                       const name = item['Name'] || item['Nama'] || '';
                       const location = item['Location'] || item['Lokasi'] || '';
                       const area = item['Area'] || item['Wilayah'] || '';
@@ -355,6 +487,10 @@ const App = () => {
                       const phone = item['Phone'] || item['No HP'] || item['Nomor HP'] || '';
                       const imageLink = item['Image Link'] || item['Image'] || item['Gambar'] || item['Foto'] || '';
                       
+                      // Specific Attributes
+                      const starRating = parseInt(item['Star'] || item['Bintang'] || '0');
+                      const isNonHalal = (item['Contain NonHalal Food'] || '').toLowerCase() === 'true';
+
                       let distance = null;
                       // Try to get coordinates from dedicated columns
                       const lat = parseFloat((item['Latitude'] || item['Lat'] || '').replace(',', '.'));
@@ -374,7 +510,15 @@ const App = () => {
                       }
 
                       return (
-                        <div key={index} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col">
+                        <div key={index} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col relative">
+                          {isNonHalal && (
+                            <div className="absolute top-0 right-0 z-20">
+                              <div className="bg-pink-600 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold shadow-sm flex items-center gap-1">
+                                <Utensils className="w-3 h-3 fill-white" />
+                                NON HALAL
+                              </div>
+                            </div>
+                          )}
                           {imageLink && (
                             <div className="w-full h-32 overflow-hidden bg-gray-100">
                                <img 
@@ -399,6 +543,16 @@ const App = () => {
                                     </span>
                                   )}
                                 </div>
+                                {exploreFilter === 'hotel' && starRating > 0 && (
+                                  <div className="flex items-center gap-0.5 mt-1">
+                                    {[...Array(5)].map((_, i) => (
+                                      <Star 
+                                        key={i} 
+                                        className={`w-3 h-3 ${i < starRating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+                                      />
+                                    ))}
+                                  </div>
+                                )}
                                 {(category || area) && (
                                   <div className="flex flex-wrap gap-1 mt-1.5">
                                     {category && (
