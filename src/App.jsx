@@ -18,18 +18,18 @@ const App = () => {
   // --- DATA SECTIONS ---
 
   const agenda = [
-    { time: '13:30', title: 'Penyambutan Tamu', desc: 'Luring', icon: User },
-    { time: '13:45', title: 'Tarian Pembukaan', desc: 'Pertunjukan Seni', icon: Flower2 },
-    { time: '13:55', title: 'Pembukaan oleh MC', desc: 'Master of Ceremony', icon: User },
-    { time: '14:05', title: 'Lagu Indonesia Raya', desc: 'Menyanyikan Lagu Kebangsaan', icon: Award },
-    { time: '14:10', title: 'Pembacaan Doa', desc: 'Khidmat', icon: FileTextIcon },
-    { time: '14:15', title: 'Video Kaleidoskop', desc: 'Kegiatan BPK & Pemprov', icon: MonitorPlay },
-    { time: '14:25', title: 'Sambutan Anggota VI BPK', desc: 'Pidato Utama', icon: User },
-    { time: '14:55', title: 'Sambutan Gubernur Kaltim', desc: 'Ketua APPSI / Perwakilan Kepala Daerah', icon: User },
-    { time: '15:10', title: 'Sambutan Wamendagri', desc: 'Ibu Ribka Haluk', icon: User },
-    { time: '15:30', title: 'Dialog Interaktif', desc: 'Anggota VI, Wamendagri & Gubernur', icon: Phone },
-    { time: '16:00', title: 'Surat Tugas & Foto Bersama', desc: 'Simbolis', icon: FileTextIcon },
-    { time: '16:15', title: 'Penutup', desc: 'Selesai', icon: Home },
+    { time: '13.30 – 13.45', title: 'Penyambutan Tamu (Luring)' },
+    { time: '13.45 – 13.55', title: 'Tarian Pembukaan' },
+    { time: '13.55 – 14.05', title: 'Pembukaan oleh MC' },
+    { time: '14.05 – 14.10', title: 'Lagu Kebangsaan Indonesia Raya' },
+    { time: '14.10 – 14.15', title: 'Pembacaan Doa' },
+    { time: '14.15 – 14.25', title: 'Penayangan Video Kaleidoskop Kegiatan BPK dengan Pemerintah Provinsi Tahun 2025-2026' },
+    { time: '14.25 – 14.55', title: 'Sambutan Anggota VI BPK' },
+    { time: '14.55 – 15.10', title: 'Sambutan Gubernur Kalimantan Timur sebagai Ketua APPSI mewakili para Kepala Daerah di lingkungan Ditjen PKN VI' },
+    { time: '15.10 – 15.30', title: 'Sambutan Wakil Menteri Dalam Negeri, Ibu Ribka Haluk' },
+    { time: '15.30 – 16.00', title: 'Dialog Anggota VI dan Wamendagri dengan Para Gubernur' },
+    { time: '16.00 – 16.15', title: 'Penyerahan Surat Tugas secara Simbolis dan Foto Bersama' },
+    { time: '16.15 – 16.20', title: 'Penutup' },
   ];
 
   const exploreData = [
@@ -58,7 +58,7 @@ const App = () => {
 
   const UkiranCorner = ({ className, rotate = 0 }) => (
     <div className={`absolute w-24 h-24 pointer-events-none z-0 opacity-20 ${className}`} style={{ transform: `rotate(${rotate}deg)` }}>
-      <svg viewBox="0 0 100 100" fill="currentColor" className="text-amber-400">
+      <svg viewBox="0 0 100 100" fill="currentColor" className="text-yellow-600">
         <path d="M10,10 C30,10 40,20 50,40 C60,20 70,10 90,10 C80,30 70,50 90,90 C70,70 50,70 50,50 C50,70 30,70 10,90 C30,50 20,30 10,10 Z M50,50 C45,45 45,55 50,60 C55,55 55,45 50,50 Z" />
         <path d="M0,0 Q50,0 50,50 Q0,50 0,0" fill="none" stroke="currentColor" strokeWidth="2"/>
         <circle cx="20" cy="20" r="3" />
@@ -71,7 +71,7 @@ const App = () => {
   const EndekPattern = () => (
     <div className="absolute inset-0 opacity-5 pointer-events-none z-0" 
          style={{
-           backgroundImage: `radial-gradient(#fbbf24 1px, transparent 1px)`,
+           backgroundImage: `radial-gradient(#ca8a04 1px, transparent 1px)`,
            backgroundSize: '16px 16px'
          }}>
     </div>
@@ -92,7 +92,7 @@ const App = () => {
   // Splash Screen
   if (loading || showSplash) {
     return (
-      <div className={`fixed inset-0 z-[60] bg-slate-900 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`fixed inset-0 z-[60] bg-gradient-to-b from-gray-100 to-gray-200 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
         <div className="absolute inset-0 overflow-hidden">
           <UkiranCorner className="top-0 left-0" rotate={0} />
           <UkiranCorner className="top-0 right-0" rotate={90} />
@@ -101,14 +101,14 @@ const App = () => {
         </div>
         <div className="text-center space-y-6 animate-pulse-slow relative z-10">
           <div className="relative w-24 h-24 mx-auto">
-            <div className="absolute inset-0 bg-amber-500 rounded-full blur-xl opacity-20 animate-spin-slow"></div>
-            <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-amber-500/30 bg-slate-800/50" />
+            <div className="absolute inset-0 bg-yellow-600 rounded-full blur-xl opacity-20 animate-spin-slow"></div>
+            <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-600/30 bg-white" />
           </div>
           <div>
-            <h1 className="text-xl font-serif text-white tracking-widest mb-2">OM SWASTIASTU</h1>
-            <p className="text-white text-xl font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
-            <p className="text-white text-xl font-serif tracking-wide mb-3">Shalom</p>
-            <p className="text-amber-500 text-sm tracking-widest uppercase">Badan Pemeriksa Keuangan</p>
+            <h1 className="text-xl font-serif text-gray-800 tracking-widest mb-2">OM SWASTIASTU</h1>
+            <p className="text-gray-800 text-xl font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <p className="text-gray-800 text-xl font-serif tracking-wide mb-3">Shalom</p>
+            <p className="text-yellow-700 text-sm tracking-widest uppercase font-semibold">Badan Pemeriksa Keuangan</p>
           </div>
         </div>
       </div>
@@ -117,19 +117,19 @@ const App = () => {
 
   // Main App Content
   return (
-    <div className="min-h-screen bg-slate-900 text-white pb-20">
+    <div className="min-h-screen bg-gray-100 text-gray-800 pb-20">
       {/* Header */}
-      <header className="bg-gradient-to-r from-slate-800 to-slate-900 p-4 sticky top-0 z-50 border-b border-amber-500/20">
+      <header className="bg-gray-700 p-4 sticky top-0 z-50 border-b border-yellow-600/30 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
             <div className="min-w-0">
-              <h1 className="font-semibold text-xs leading-tight">Guidebook Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Ditjen PKN VI BPK</h1>
+              <h1 className="font-semibold text-xs leading-tight text-white">Guidebook Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Ditjen PKN VI BPK</h1>
             </div>
           </div>
           <div className="text-right flex-shrink-0 ml-2">
-            <p className="text-amber-500 text-sm font-medium">12 Februari 2026</p>
-            <p className="text-xs text-slate-400">BPK Perwakilan Provinsi Bali</p>
+            <p className="text-yellow-400 text-sm font-medium">12 Februari 2026</p>
+            <p className="text-xs text-gray-300">BPK Perwakilan Provinsi Bali</p>
           </div>
         </div>
       </header>
@@ -139,13 +139,13 @@ const App = () => {
         {activeTab === 'home' && (
           <div className="space-y-6">
             {/* Welcome Card */}
-            <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 overflow-hidden border border-amber-500/20">
+            <div className="relative bg-white rounded-2xl p-6 overflow-hidden border border-yellow-600/20 shadow-md">
               <EndekPattern />
               <UkiranCorner className="top-0 right-0" rotate={90} />
               <div className="relative z-10">
-                <h2 className="text-2xl font-serif text-amber-500 mb-2">Om Swastiastu</h2>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  Selamat datang di Entry Meeting Pemeriksaan LKPD TA 2025. 
+                <h2 className="text-2xl font-serif text-yellow-700 mb-2">Om Swastiastu</h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025. 
                   Semoga pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
                 </p>
               </div>
@@ -153,29 +153,29 @@ const App = () => {
 
             {/* Quick Info */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                <MapPin className="w-5 h-5 text-amber-500 mb-2" />
+              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                <MapPin className="w-5 h-5 text-yellow-700 mb-2" />
                 <p className="text-sm font-medium">Lokasi</p>
-                <p className="text-xs text-slate-400">The Meru Sanur</p>
+                <p className="text-xs text-gray-500">BPK Perwakilan Provinsi Bali</p>
               </div>
-              <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                <Clock className="w-5 h-5 text-amber-500 mb-2" />
+              <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                <Clock className="w-5 h-5 text-yellow-700 mb-2" />
                 <p className="text-sm font-medium">Waktu</p>
-                <p className="text-xs text-slate-400">13:30 WITA - Selesai</p>
+                <p className="text-xs text-gray-500">13:30 WITA - Selesai</p>
               </div>
             </div>
 
             {/* Agenda */}
             <div>
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-amber-500" />
+                <Calendar className="w-5 h-5 text-yellow-700" />
                 Rundown Acara
               </h3>
               <div className="space-y-3">
                 {agenda.map((item, index) => (
-                  <div key={index} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700 flex items-center gap-4">
-                    <span className="text-amber-500 text-sm font-mono flex-shrink-0 w-12">{item.time}</span>
-                    <p className="font-medium text-sm">{item.title}</p>
+                  <div key={index} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-start gap-4">
+                    <span className="text-yellow-700 text-xs font-mono flex-shrink-0 w-24 pt-0.5">{item.time}</span>
+                    <p className="font-medium text-sm text-gray-700">{item.title}</p>
                   </div>
                 ))}
               </div>
@@ -186,7 +186,7 @@ const App = () => {
         {activeTab === 'explore' && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-amber-500" />
+              <MapPin className="w-5 h-5 text-yellow-700" />
               Eksplorasi Sekitar
             </h3>
 
@@ -198,8 +198,8 @@ const App = () => {
                   onClick={() => setExploreFilter(filter.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all ${
                     exploreFilter === filter.id
-                      ? 'bg-amber-500 text-slate-900'
-                      : 'bg-slate-800 text-slate-300 border border-slate-700'
+                      ? 'bg-yellow-600 text-white'
+                      : 'bg-white text-gray-600 border border-gray-200 shadow-sm'
                   }`}
                 >
                   <filter.icon className="w-4 h-4" />
@@ -211,14 +211,14 @@ const App = () => {
             {/* Cards */}
             <div className="space-y-4">
               {filteredExplore.map((item) => (
-                <div key={item.id} className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+                <div key={item.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                   <img src={item.image} alt={item.name} className="w-full h-40 object-cover" />
                   <div className="p-4">
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="font-medium">{item.name}</p>
-                        <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
-                        <p className="text-xs text-amber-500 mt-2 flex items-center gap-1">
+                        <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+                        <p className="text-xs text-yellow-700 mt-2 flex items-center gap-1">
                           <MapPin className="w-3 h-3" />
                           {item.address}
                         </p>
@@ -226,7 +226,7 @@ const App = () => {
                     </div>
                     <button
                       onClick={() => openMap(item.mapQuery)}
-                      className="mt-3 w-full bg-amber-500/20 text-amber-500 py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+                      className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200"
                     >
                       <ExternalLink className="w-4 h-4" />
                       Buka di Google Maps
@@ -241,25 +241,25 @@ const App = () => {
         {activeTab === 'info' && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
-              <Info className="w-5 h-5 text-amber-500" />
+              <Info className="w-5 h-5 text-yellow-700" />
               Informasi
             </h3>
-            <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
               <h4 className="font-medium mb-2">Kontak Panitia</h4>
-              <div className="space-y-2 text-sm text-slate-300">
+              <div className="space-y-2 text-sm text-slate-600">
                 <p className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-amber-500" />
+                  <Phone className="w-4 h-4 text-yellow-700" />
                   +62 812-3456-7890
                 </p>
                 <p className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-amber-500" />
+                  <User className="w-4 h-4 text-yellow-700" />
                   Sekretariat BPK Bali
                 </p>
               </div>
             </div>
-            <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
               <h4 className="font-medium mb-2">Tentang Acara</h4>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Entry Meeting Pemeriksaan LKPD Tahun Anggaran 2025 adalah pertemuan awal 
                 antara tim pemeriksa BPK dengan entitas yang diperiksa untuk menyamakan 
                 persepsi dan menyepakati jadwal pemeriksaan.
@@ -270,7 +270,7 @@ const App = () => {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-4 py-2 z-50">
+      <nav className="fixed bottom-0 left-0 right-0 bg-gray-700 border-t border-gray-600 px-4 py-2 z-50 shadow-lg">
         <div className="flex justify-around">
           {[
             { id: 'home', icon: Home, label: 'Beranda' },
@@ -282,8 +282,8 @@ const App = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex flex-col items-center py-2 px-4 rounded-xl transition-all ${
                 activeTab === tab.id
-                  ? 'text-amber-500'
-                  : 'text-slate-500'
+                  ? 'text-yellow-400'
+                  : 'text-gray-400'
               }`}
             >
               <tab.icon className="w-6 h-6" />
