@@ -102,14 +102,13 @@ const App = () => {
         <div className="text-center space-y-6 animate-pulse-slow relative z-10">
           <div className="relative w-24 h-24 mx-auto">
             <div className="absolute inset-0 bg-amber-500 rounded-full blur-xl opacity-20 animate-spin-slow"></div>
-            <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border-2 border-amber-500/30">
-              <span className="font-bold text-2xl text-white tracking-widest">BPK</span>
-            </div>
+            <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-amber-500/30 bg-slate-800/50" />
           </div>
           <div>
-            <h1 className="text-2xl font-serif text-white tracking-widest mb-1">OM SWASTIASTU</h1>
+            <h1 className="text-xl font-serif text-white tracking-widest mb-2">OM SWASTIASTU</h1>
+            <p className="text-white text-xl font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <p className="text-white text-xl font-serif tracking-wide mb-3">Shalom</p>
             <p className="text-amber-500 text-sm tracking-widest uppercase">Badan Pemeriksa Keuangan</p>
-            <p className="text-slate-400 text-xs mt-1">Perwakilan Provinsi Bali</p>
           </div>
         </div>
       </div>
@@ -122,18 +121,15 @@ const App = () => {
       {/* Header */}
       <header className="bg-gradient-to-r from-slate-800 to-slate-900 p-4 sticky top-0 z-50 border-b border-amber-500/20">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-amber-400 to-amber-600 w-10 h-10 rounded-full flex items-center justify-center">
-              <span className="font-bold text-slate-900 text-sm">BPK</span>
-            </div>
-            <div>2 Febr
-              <h1 className="font-semibold text-lg">Guidebook</h1>
-              <p className="text-xs text-slate-400">Entry Meeting LKPD 2025</p>
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <img src="/BPK.png" alt="Logo BPK" className="w-10 h-10 rounded-full object-contain flex-shrink-0" />
+            <div className="min-w-0">
+              <h1 className="font-semibold text-xs leading-tight">Guidebook Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Ditjen PKN VI BPK</h1>
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-amber-500 text-sm font-medium">10 Januari 2026</p>
-            <p className="text-xs text-slate-400">The Meru Sanur</p>
+          <div className="text-right flex-shrink-0 ml-2">
+            <p className="text-amber-500 text-sm font-medium">12 Februari 2026</p>
+            <p className="text-xs text-slate-400">BPK Perwakilan Provinsi Bali</p>
           </div>
         </div>
       </header>
@@ -177,17 +173,9 @@ const App = () => {
               </h3>
               <div className="space-y-3">
                 {agenda.map((item, index) => (
-                  <div key={index} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700 flex items-start gap-4">
-                    <div className="bg-amber-500/20 rounded-lg p-2 flex-shrink-0">
-                      <item.icon className="w-5 h-5 text-amber-500" size={20} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <p className="font-medium text-sm">{item.title}</p>
-                        <span className="text-amber-500 text-xs font-mono">{item.time}</span>
-                      </div>
-                      <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
-                    </div>
+                  <div key={index} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700 flex items-center gap-4">
+                    <span className="text-amber-500 text-sm font-mono flex-shrink-0 w-12">{item.time}</span>
+                    <p className="font-medium text-sm">{item.title}</p>
                   </div>
                 ))}
               </div>
