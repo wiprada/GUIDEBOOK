@@ -217,6 +217,7 @@ const App = () => {
                 ))}
               </div>
             </div>
+            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
           </div>
         )}
 
@@ -272,6 +273,7 @@ const App = () => {
                 </div>
               ))}
             </div>
+            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
           </div>
         )}
 
@@ -302,6 +304,7 @@ const App = () => {
                 persepsi dan menyepakati jadwal pemeriksaan.
               </p>
             </div>
+            <p className="text-center text-xs text-gray-400 mt-6 mb-2">© 2026 - Data Analytics Center BPK BALI</p>
           </div>
         )}
       </main>
