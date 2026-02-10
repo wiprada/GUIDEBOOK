@@ -18,8 +18,32 @@ const App = () => {
   const [isKontakOpen, setIsKontakOpen] = useState(false);
   const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: false });
 
   // Quick navigation helper
+  // Countdown timer to 12 Feb 2026 13:55 WITA (UTC+8)
+  useEffect(() => {
+    const targetDate = new Date('2026-02-12T13:55:00+08:00').getTime();
+    const updateCountdown = () => {
+      const now = Date.now();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: true });
+        return;
+      }
+      setCountdown({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((diff % (1000 * 60)) / 1000),
+        isExpired: false
+      });
+    };
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const navigateTo = (tab, openFn, sectionId) => {
     setActiveTab(tab);
     setTimeout(() => {
@@ -466,8 +490,6 @@ const App = () => {
               </div>
             </div>
 
-            {/* Aesthetic Image Section Removed */}
-
             {/* Tautan Cepat */}
             <div>
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Tautan Cepat</h3>
@@ -526,6 +548,45 @@ const App = () => {
                   </div>
                   <span className="text-sm font-medium text-gray-700">Narahubung</span>
                 </button>
+              </div>
+            </div>
+
+            {/* Countdown Timer */}
+            <div className="relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-2xl p-5 overflow-hidden border border-yellow-600/30 shadow-lg">
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute bottom-0 right-0 w-24 h-24 bg-yellow-500/10 rounded-full blur-2xl translate-x-1/2 translate-y-1/2" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(234,179,8,0.08),transparent_50%)]" />
+              
+              <div className="relative z-10">
+                <p className="text-gray-400 text-[11px] text-center mb-4">12 Februari 2026 • 13.55 WITA</p>
+                
+                {!countdown.isExpired ? (
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { value: countdown.days, label: 'Hari' },
+                      { value: countdown.hours, label: 'Jam' },
+                      { value: countdown.minutes, label: 'Menit' },
+                      { value: countdown.seconds, label: 'Detik' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex flex-col items-center">
+                        <div className="relative w-full">
+                          <div className="bg-gray-700/80 backdrop-blur-sm rounded-xl border border-yellow-600/20 py-3 px-1 flex items-center justify-center shadow-inner">
+                            <span className="text-2xl font-bold text-yellow-400 tabular-nums" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                              {String(item.value).padStart(2, '0')}
+                            </span>
+                          </div>
+                          <div className="absolute left-0 right-0 top-1/2 h-px bg-gray-600/40" />
+                        </div>
+                        <span className="text-[10px] text-gray-400 mt-1.5 font-medium uppercase tracking-wider">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-2">
+                    <span className="text-yellow-400 text-lg font-bold">🎉 Selamat Mengikuti Kegiatan!</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1044,7 +1105,7 @@ const App = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <Info className="w-5 h-5 text-yellow-700" />
-              Informasi
+              Informasi Lainnya
             </h3>
             <div id="section-kontak" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
               <button
