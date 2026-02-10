@@ -25,14 +25,8 @@ const App = () => {
   const BPK_COORDS = { lat: -8.6725, lng: 115.2323 };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
+    // Removed distance calculation feature by request
+    return null; 
   };
 
   const categories = [
@@ -78,7 +72,6 @@ const App = () => {
     setSubpageLoading(true);
     setSubpageData([]);
     setFilters({}); // Reset filters
-    setSortBy('default'); // Reset sort
     try {
       const url = `https://docs.google.com/spreadsheets/d/e/${SPREADSHEET_ID}/pub?gid=${cat.gid}&single=true&output=csv`;
       const res = await fetch(url);
@@ -141,7 +134,7 @@ const App = () => {
       time: '11.00 - 12.30 WITA', 
       title: 'Penyambutan Tamu dan Makan Siang',
       location: 'Lobby',
-      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di Wilayah DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta'
+      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di lingkungan DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta'
     },
     { 
       time: '12.30 - 13.00 WITA', 
@@ -347,39 +340,24 @@ const App = () => {
     return true;
   });
 
+  const getValue = (obj, possibleKeys) => {
+    const objKeys = Object.keys(obj);
+    for (const key of possibleKeys) {
+        if (obj[key] !== undefined && obj[key] !== '') return obj[key];
+        const found = objKeys.find(k => k.toLowerCase() === key.toLowerCase());
+        if (found && obj[found] !== undefined && obj[found] !== '') return obj[found];
+    }
+    return '';
+  };
+
   const processedData = filteredData.map(item => {
+    // Distance logic removed
     let distanceVal = null;
     let distanceLabel = null;
-    
-    // Try calculate distance
-    const lat = parseFloat((item['Latitude'] || item['Lat'] || '').replace(',', '.'));
-    const lng = parseFloat((item['Longitude'] || item['Long'] || item['Lng'] || '').replace(',', '.'));
-    const location = item['Location'] || item['Lokasi'] || '';
-
-    if (!isNaN(lat) && !isNaN(lng)) {
-      distanceVal = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, lat, lng);
-      distanceLabel = distanceVal.toFixed(2).replace('.', ',');
-    } else if (location && location.includes('google.com/maps')) {
-        const match = location.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || location.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/);
-        if (match) {
-          const urlLat = parseFloat(match[1]);
-          const urlLng = parseFloat(match[2]);
-          distanceVal = calculateDistance(BPK_COORDS.lat, BPK_COORDS.lng, urlLat, urlLng);
-          distanceLabel = distanceVal.toFixed(2).replace('.', ',');
-        }
-    }
-    return { ...item, _dist: distanceVal, _distLabel: distanceLabel };
+    return { ...item, _dist: null, _distLabel: null };
   });
 
-  const sortedData = [...processedData].sort((a, b) => {
-    if (sortBy === 'distance') {
-      if (a._dist === null && b._dist === null) return 0;
-      if (a._dist === null) return 1;
-      if (b._dist === null) return -1;
-      return a._dist - b._dist;
-    }
-    return 0;
-  });
+  const sortedData = [...processedData]; // Removed sorting by distance
 
   // Splash Screen
   if (loading || showSplash) {
@@ -618,16 +596,8 @@ const App = () => {
                     <div className="flex items-center justify-between mb-2">
                        <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
                          <Filter className="w-4 h-4" />
-                         Filter & Urutkan
+                         Filter
                        </div>
-                       <select 
-                          value={sortBy} 
-                          onChange={(e) => setSortBy(e.target.value)}
-                          className="text-xs bg-gray-50 border border-gray-200 text-gray-700 rounded-lg px-2 py-1 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                        >
-                           <option value="default">Default</option>
-                           <option value="distance">Terdekat (Jarak)</option>
-                        </select>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {exploreFilter === 'hotel' && (
@@ -794,11 +764,6 @@ const App = () => {
                                 <Phone className="w-3.5 h-3.5" />
                                 Hubungi
                               </a>
-                            )}
-                            {distance && (
-                              <span className="text-xs font-mono text-yellow-700 bg-yellow-50 px-2 py-1.5 rounded-lg border border-yellow-200 whitespace-nowrap">
-                                ±{distance} km
-                              </span>
                             )}
                           </div>
                         </div>
