@@ -414,11 +414,24 @@ const App = () => {
               <EndekPattern />
               <BungaJepunCorner className="top-0 right-0" rotate={90} /> 
               <div className="relative z-10">
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025. 
-                  Semoga pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
+                <h2 className="text-yellow-700 font-serif font-bold text-lg mb-2">Om Swastiastu</h2>
+                <p className="text-gray-600 text-sm leading-relaxed mb-2">
+                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI. Astungkara pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
                 </p>
+                <p className="text-gray-600 text-sm font-medium">Rahayu.</p>
               </div>
+            </div>
+
+            {/* Aesthetic Image Section */}
+            <div className="relative bg-white p-1 rounded-2xl shadow-md border border-yellow-600/10 rotate-1 transform hover:rotate-0 transition-all duration-500">
+               <div className="relative rounded-xl overflow-hidden h-72">
+                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-900/50 z-10"></div>
+                   <img 
+                      src="/Couple Bali.jpeg" 
+                      alt="Couple Bali" 
+                      className="w-full h-full object-cover object-top filter sepia-[0.3] contrast-90 hover:sepia-0 hover:contrast-100 transition-all duration-700" 
+                   />
+               </div>
             </div>
 
             {/* Lokasi Removed from Home */}
