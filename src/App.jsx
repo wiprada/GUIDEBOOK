@@ -362,39 +362,40 @@ const App = () => {
   // Splash Screen
   if (loading || showSplash) {
     return (
-      <div className={`fixed inset-0 z-[60] bg-gray-100 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`fixed inset-0 z-[60] bg-zinc-200 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
         {/* Fullscreen Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 flex items-end justify-center">
           <img 
             src="/Couple Bali.jpeg" 
             alt="Couple BPK Bali" 
-            className="w-full h-full object-cover object-bottom"
+            className="w-full h-full object-contain object-bottom"
           />
-          {/* Heavy gradient overlay to ensure text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/60 to-gray-900/40"></div>
-          {/* Top gradient for logo visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-transparent to-transparent"></div>
+          {/* Top gradient for logo visibility if image reaches top */}
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-gray-900/40 to-transparent pointer-events-none"></div>
         </div>
 
-        <div className="text-center space-y-6 animate-pulse-slow relative z-10 w-full px-6 flex flex-col items-center h-full pt-12 pb-8 justify-between">
-           {/* Logo Section - Top Center */}
-           <div className="flex flex-col items-center mt-8">
-              <div className="relative w-28 h-28 mx-auto mb-4">
-                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-2xl opacity-30 animate-spin-slow"></div>
-                <img src="/BPK.png" alt="Logo BPK" className="relative w-28 h-28 rounded-full object-contain shadow-2xl border-4 border-yellow-500/50 bg-white/90 p-1" />
+        <div className="text-center relative z-10 w-full px-6 flex flex-col items-center h-full pt-12 pb-8 justify-between">
+           {/* Logo & Agency Name Section - Top Center */}
+           <div className="flex flex-col items-center mt-6">
+              <div className="relative w-24 h-24 mx-auto mb-3">
+                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-40 animate-spin-slow"></div>
+                <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-500/50 bg-white/95 p-1" />
               </div>
+              <p className="text-yellow-100 text-[10px] tracking-[0.2em] uppercase font-bold drop-shadow-lg bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-[2px] border border-white/10">
+                Badan Pemeriksa Keuangan
+              </p>
            </div>
 
-           {/* Empty spacer to push content */}
-           <div className="flex-1"></div>
-
-           {/* Text Section - Bottom */}
-           <div className="mb-12">
-            <p className="text-yellow-400 text-sm tracking-[0.2em] uppercase font-bold mb-4 drop-shadow-md">Badan Pemeriksa Keuangan</p>
-            <h1 className="text-3xl font-serif text-white tracking-widest mb-3 drop-shadow-lg font-medium">Om Swastiastu</h1>
-            <p className="text-white text-base font-serif tracking-wide mb-2 drop-shadow-md opacity-90">Assalamualaikum Warahmatullahi Wabarakatuh</p>
-            <p className="text-white text-lg font-serif tracking-wide drop-shadow-md opacity-90">Shalom</p>
-          </div>
+           {/* Greetings Section - Floating Middle/Lower */}
+           {/* Lifted up to be roughly "below elbows" */}
+           <div className="mb-24 w-full max-w-xs">
+             <div className="p-5 rounded-2xl border border-white/10 shadow-2xl bg-black/30 backdrop-blur-md">
+                <h1 className="text-2xl font-serif text-white tracking-widest mb-2 drop-shadow-md font-medium">Om Swastiastu</h1>
+                <div className="w-12 h-0.5 bg-yellow-500/50 mx-auto mb-2 rounded-full"></div>
+                <p className="text-white text-xs font-serif tracking-wide mb-1.5 drop-shadow-sm opacity-90">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+                <p className="text-white text-base font-serif tracking-wide drop-shadow-sm opacity-90">Shalom</p>
+             </div>
+           </div>
         </div>
       </div>
     );
