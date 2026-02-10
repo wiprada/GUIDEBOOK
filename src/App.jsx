@@ -17,6 +17,7 @@ const App = () => {
   const [isVenueOpen, setIsVenueOpen] = useState(false);
   const [isKontakOpen, setIsKontakOpen] = useState(false);
   const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
+  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: false });
 
@@ -647,7 +648,7 @@ const App = () => {
                 </div>
             </div>
 
-            {/* Informasi Umum Kegiatan */}
+            {/*  */}
             <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <button 
                     onClick={() => setIsInfoUmumOpen(!isInfoUmumOpen)}
@@ -655,7 +656,7 @@ const App = () => {
                 >
                     <span className="flex items-center gap-2 font-semibold text-lg text-left">
                         <Info className="w-5 h-5 text-yellow-700 flex-shrink-0" />
-                        Informasi Umum Kegiatan Entry Meeting
+                        Informasi Umum Kegiatan Entry Meeting LKPD Tahun 2025
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isInfoUmumOpen ? 'rotate-90' : ''}`} />
                 </button>
@@ -1171,6 +1172,42 @@ const App = () => {
               </div>
               </div>
             </div>
+
+            {/* Dashboard SINER6I */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <button
+                onClick={() => setIsDashboardOpen(!isDashboardOpen)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-2 font-semibold text-lg text-left">
+                  <BarChart3 className="w-5 h-5 text-yellow-700 flex-shrink-0" />
+                  Dashboard SINER6I LKPD TIMUR
+                </span>
+                <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 flex-shrink-0 ${isDashboardOpen ? 'rotate-90' : ''}`} />
+              </button>
+              <div className={`transition-all duration-300 ease-in-out ${isDashboardOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className="p-4 pt-0">
+                  <div className="rounded-lg overflow-hidden border border-gray-200">
+                    <iframe
+                      title="Dashboard SINER6I LKPD TIMUR"
+                      src="https://bpk.id/LKPDSINER6I"
+                      className="w-full h-[450px] border-0"
+                      allowFullScreen
+                    />
+                  </div>
+                  <a
+                    href="https://bpk.id/LKPDSINER6I"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Buka di Tab Baru
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <FooterSection />
           </div>
         )}
