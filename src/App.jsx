@@ -460,11 +460,11 @@ const App = () => {
                 >
                     <span className="flex items-center gap-2 font-semibold text-lg">
                         <MapPin className="w-5 h-5 text-yellow-700" />
-                        Venue
+                        Venue & Denah Situasi
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isVenueOpen ? 'rotate-90' : ''}`} />
                 </button>
-                <div className={`transition-all duration-300 ease-in-out ${isVenueOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className={`transition-all duration-300 ease-in-out ${isVenueOpen ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                   <img src="/Gedung%20BPK%20Bali.png" alt="Gedung BPK Perwakilan Provinsi Bali" className="w-full h-40 object-cover" />
                   <div className="p-4">
                     <p className="font-medium flex items-center gap-2">
@@ -482,6 +482,32 @@ const App = () => {
                       <ExternalLink className="w-4 h-4" />
                       Buka di Google Maps
                     </button>
+
+                    {/* Denah Situasi PDF Preview */}
+                    <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mt-4 mb-2">Denah Situasi Gedung</p>
+                    <div className="w-full h-72 bg-gray-100 rounded-lg border border-gray-200 mb-2 overflow-hidden shadow-inner">
+                      <iframe 
+                        src="/Denah%20Situasi%20Gedung%20BPK%20Bali.pdf#view=FitH&toolbar=0&navpanes=0" 
+                        title="Preview Denah Situasi Gedung BPK Bali"
+                        className="w-full h-full"
+                        style={{ border: 'none' }}
+                      />
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 text-sm text-gray-600 mb-2">
+                      <p className="flex items-start gap-2">
+                        <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-xs leading-relaxed">Jika preview tidak muncul, silakan unduh file melalui tombol di bawah.</span>
+                      </p>
+                    </div>
+                    <a 
+                      href="/Denah%20Situasi%20Gedung%20BPK%20Bali.pdf" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-full bg-gray-700 text-white py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Lihat/Unduh Denah Situasi (PDF)
+                    </a>
                   </div>
                 </div>
             </div>
@@ -658,10 +684,15 @@ const App = () => {
                               { area: 'DPMD Dukcapil Provinsi Bali', color: '#f27ac4', link: 'https://maps.app.goo.gl/epqNbqYs4xGWyMuU9' },
                               { area: 'DPRD Provinsi Bali', color: '#02a2de', link: 'https://maps.app.goo.gl/wtvEFhjaoHvzu17x5' },
                               { area: 'Gedung Wanita Nari Graha', color: '#52a412', link: 'https://maps.app.goo.gl/vTq2RHMJ9TBhiDDG6' },
+                              { area: 'Area Parkir Timur Lapangan Renon', color: null, link: 'https://maps.app.goo.gl/5UEUnzT7v84w7dEz6' },
                             ].map((item, idx) => (
                               <div key={idx} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
                                 <div className="flex items-center gap-2.5">
-                                  <span className="w-4 h-4 rounded-sm border border-gray-300 flex-shrink-0" style={{ backgroundColor: item.color }} />
+                                  {item.color ? (
+                                    <span className="w-4 h-4 rounded-sm border border-gray-300 flex-shrink-0" style={{ backgroundColor: item.color }} />
+                                  ) : (
+                                    <span className="w-4 h-4 rounded-sm border border-dashed border-gray-400 flex-shrink-0 bg-white" />
+                                  )}
                                   <span className="text-sm text-gray-800">{item.area}</span>
                                 </div>
                                 <a href={item.link} target="_blank" rel="noopener noreferrer" className="w-7 h-7 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-full flex items-center justify-center transition-colors">
