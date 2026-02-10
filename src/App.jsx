@@ -362,23 +362,38 @@ const App = () => {
   // Splash Screen
   if (loading || showSplash) {
     return (
-      <div className={`fixed inset-0 z-[60] bg-gradient-to-b from-gray-100 to-gray-200 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="absolute inset-0 overflow-hidden">
-          <BungaJepunCorner className="top-0 left-0" rotate={0} />
-          <BungaJepunCorner className="top-0 right-0" rotate={90} />
-          <BungaJepunCorner className="bottom-0 right-0" rotate={180} />
-          <BungaJepunCorner className="bottom-0 left-0" rotate={270} />
+      <div className={`fixed inset-0 z-[60] bg-gray-100 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Fullscreen Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/Couple Bali.jpeg" 
+            alt="Couple BPK Bali" 
+            className="w-full h-full object-cover object-bottom"
+          />
+          {/* Heavy gradient overlay to ensure text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/60 to-gray-900/40"></div>
+          {/* Top gradient for logo visibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-transparent to-transparent"></div>
         </div>
-        <div className="text-center space-y-6 animate-pulse-slow relative z-10">
-          <div className="relative w-24 h-24 mx-auto">
-            <div className="absolute inset-0 bg-yellow-600 rounded-full blur-xl opacity-20 animate-spin-slow"></div>
-            <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-600/30 bg-white" />
-          </div>
-          <div>
-            <p className="text-yellow-700 text-sm tracking-widest uppercase font-semibold mb-4">Badan Pemeriksa Keuangan</p>
-            <h1 className="text-xl font-serif text-gray-800 tracking-widest mb-2">Om Swastiastu</h1>
-            <p className="text-gray-800 text-lg font-serif tracking-wide mb-2">Assalamualaikum Warahmatullahi Wabarakatuh</p>
-            <p className="text-gray-800 text-xl font-serif tracking-wide mb-3">Shalom</p>
+
+        <div className="text-center space-y-6 animate-pulse-slow relative z-10 w-full px-6 flex flex-col items-center h-full pt-12 pb-8 justify-between">
+           {/* Logo Section - Top Center */}
+           <div className="flex flex-col items-center mt-8">
+              <div className="relative w-28 h-28 mx-auto mb-4">
+                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-2xl opacity-30 animate-spin-slow"></div>
+                <img src="/BPK.png" alt="Logo BPK" className="relative w-28 h-28 rounded-full object-contain shadow-2xl border-4 border-yellow-500/50 bg-white/90 p-1" />
+              </div>
+           </div>
+
+           {/* Empty spacer to push content */}
+           <div className="flex-1"></div>
+
+           {/* Text Section - Bottom */}
+           <div className="mb-12">
+            <p className="text-yellow-400 text-sm tracking-[0.2em] uppercase font-bold mb-4 drop-shadow-md">Badan Pemeriksa Keuangan</p>
+            <h1 className="text-3xl font-serif text-white tracking-widest mb-3 drop-shadow-lg font-medium">Om Swastiastu</h1>
+            <p className="text-white text-base font-serif tracking-wide mb-2 drop-shadow-md opacity-90">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <p className="text-white text-lg font-serif tracking-wide drop-shadow-md opacity-90">Shalom</p>
           </div>
         </div>
       </div>
@@ -416,23 +431,13 @@ const App = () => {
               <div className="relative z-10">
                 <h2 className="text-yellow-700 font-serif font-bold text-lg mb-2">Om Swastiastu</h2>
                 <p className="text-gray-600 text-sm leading-relaxed mb-2">
-                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI. Astungkara pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
+                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI.<br />Astungkara pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
                 </p>
-                <p className="text-gray-600 text-sm font-medium">Rahayu.</p>
+                <p className="text-gray-600 text-sm font-medium">Rahayu</p>
               </div>
             </div>
 
-            {/* Aesthetic Image Section */}
-            <div className="relative bg-white p-1 rounded-2xl shadow-md border border-yellow-600/10 rotate-1 transform hover:rotate-0 transition-all duration-500">
-               <div className="relative rounded-xl overflow-hidden h-72">
-                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-900/50 z-10"></div>
-                   <img 
-                      src="/Couple Bali.jpeg" 
-                      alt="Couple Bali" 
-                      className="w-full h-full object-cover object-top filter sepia-[0.3] contrast-90 hover:sepia-0 hover:contrast-100 transition-all duration-700" 
-                   />
-               </div>
-            </div>
+            {/* Aesthetic Image Section Removed */}
 
             {/* Lokasi Removed from Home */}
             
