@@ -634,7 +634,7 @@ const App = () => {
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isParkingOpen ? 'rotate-90' : ''}`} />
                 </button>
-                <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                     <div className="p-4 pt-0">
                         {/* PDF Preview */}
                         <div className="w-full h-80 bg-gray-100 rounded-lg border border-gray-200 mb-4 overflow-hidden shadow-inner">
@@ -644,6 +644,32 @@ const App = () => {
                                 className="w-full h-full"
                                 style={{ border: 'none' }}
                              />
+                        </div>
+
+                        {/* Area Parkir Legend */}
+                        <div className="mb-3">
+                          <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Area Parkir</p>
+                          <div className="space-y-1.5">
+                            {[
+                              { area: 'BPK Perwakilan Provinsi Bali', color: '#000000', link: 'https://maps.app.goo.gl/iy5ye8hZBGtW58w49' },
+                              { area: 'Inspektorat Provinsi Bali', color: '#b4b6cd', link: 'https://maps.app.goo.gl/qAXBtsYeMgnnH4ZPA' },
+                              { area: 'Satpol PP Provinsi Bali', color: '#d23035', link: 'https://maps.app.goo.gl/D6JaWffBYuYnXWJZ8' },
+                              { area: 'Diskominfos Provinsi Bali', color: '#d0b300', link: 'https://maps.app.goo.gl/zfsYJWpDJMPZ8jzp8' },
+                              { area: 'DPMD Dukcapil Provinsi Bali', color: '#f27ac4', link: 'https://maps.app.goo.gl/epqNbqYs4xGWyMuU9' },
+                              { area: 'DPRD Provinsi Bali', color: '#02a2de', link: 'https://maps.app.goo.gl/wtvEFhjaoHvzu17x5' },
+                              { area: 'Gedung Wanita Nari Graha', color: '#52a412', link: 'https://maps.app.goo.gl/vTq2RHMJ9TBhiDDG6' },
+                            ].map((item, idx) => (
+                              <div key={idx} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                                <div className="flex items-center gap-2.5">
+                                  <span className="w-4 h-4 rounded-sm border border-gray-300 flex-shrink-0" style={{ backgroundColor: item.color }} />
+                                  <span className="text-sm text-gray-800">{item.area}</span>
+                                </div>
+                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="w-7 h-7 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-full flex items-center justify-center transition-colors">
+                                  <MapPin className="w-3.5 h-3.5 text-yellow-700" />
+                                </a>
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
                         <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 text-sm text-gray-600 mb-3">
