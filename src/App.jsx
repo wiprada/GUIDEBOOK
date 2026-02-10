@@ -592,8 +592,8 @@ const App = () => {
                     onClick={() => setIsInfoUmumOpen(!isInfoUmumOpen)}
                     className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
                 >
-                    <span className="flex items-center gap-2 font-semibold text-lg">
-                        <Info className="w-5 h-5 text-yellow-700" />
+                    <span className="flex items-center gap-2 font-semibold text-lg text-left">
+                        <Info className="w-5 h-5 text-yellow-700 flex-shrink-0" />
                         Informasi Umum Kegiatan Entry Meeting
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isInfoUmumOpen ? 'rotate-90' : ''}`} />
@@ -1127,14 +1127,14 @@ const App = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-center py-2 px-4 rounded-xl transition-all ${
+              className={`flex flex-col items-center py-2 px-5 rounded-xl transition-all ${
                 activeTab === tab.id
-                  ? 'text-yellow-400'
+                  ? 'bg-yellow-500 text-[#374151]'
                   : 'text-gray-400'
               }`}
             >
               <tab.icon className="w-6 h-6" />
-              <span className="text-xs mt-1">{tab.label}</span>
+              <span className="text-xs mt-1 font-medium">{tab.label}</span>
             </button>
           ))}
         </div>
