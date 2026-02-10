@@ -15,6 +15,7 @@ const App = () => {
   const [isPresensiOpen, setIsPresensiOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isVenueOpen, setIsVenueOpen] = useState(false);
+  const [isKontakOpen, setIsKontakOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
 
   const toggleAgenda = (index) => {
@@ -378,7 +379,7 @@ const App = () => {
 
         <div className="text-center relative z-10 w-full px-6 flex flex-col items-center h-full py-8 justify-between">
            {/* Logo & Agency Name Section - Top Center */}
-           <div className="flex flex-col items-center mt-4 animate-slide-down">
+           <div className="flex flex-col items-center mt-1 animate-slide-down">
               <div className="relative w-24 h-24 mx-auto mb-4">
                 <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
                 <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-500/80 bg-white/95 p-1" />
@@ -389,8 +390,8 @@ const App = () => {
            </div>
 
            {/* Greetings Section - Floating Middle */}
-           <div className="mb-20 w-full max-w-sm animate-slide-up">
-             <div className="p-6 rounded-2xl border border-white/10 shadow-2xl bg-black/20 backdrop-blur-md flex flex-col items-center">
+           <div className="mb-20 w-full animate-slide-up">
+             <div className="p-6 border-t border-b border-white/10 shadow-2xl bg-black/50 flex flex-col items-center">
                 <h1 className="text-xl font-serif text-white tracking-widest mb-2 drop-shadow-lg font-medium text-center">Om Swastiastu</h1>
                 <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-3"></div>
                 
@@ -442,7 +443,7 @@ const App = () => {
               <div className="relative z-10">
                 <h2 className="text-yellow-700 font-serif font-bold text-lg mb-2">Om Swastiastu</h2>
                 <p className="text-gray-600 text-sm leading-relaxed mb-2">
-                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI.<br />Astungkara pertemuan ini berjalan lancar dan membawa hasil yang bermanfaat.
+                  Selamat datang di Entry Meeting Pemeriksaan LKPD Tahun 2025 di lingkungan Direktorat Jenderal Pemeriksaan Keuangan Negara VI.<br />Astungkara pertemuan ini berjalan lancar dan memberikan hasil yang bermartabat dan bermanfaat.
                 </p>
                 <p className="text-gray-600 text-sm font-medium">Rahayu</p>
               </div>
@@ -493,27 +494,12 @@ const App = () => {
                       </button>
                     </div>
 
-                    {/* Denah Situasi PDF Preview */}
-                    <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mt-4 mb-2">Denah Situasi Gedung</p>
-                    <div className="w-full h-72 bg-gray-100 rounded-lg border border-gray-200 mb-2 overflow-hidden shadow-inner">
-                      <iframe 
-                        src="/Denah%20Situasi%20Gedung%20BPK%20Bali.pdf#view=FitH&toolbar=0&navpanes=0" 
-                        title="Preview Denah Situasi Gedung BPK Bali"
-                        className="w-full h-full"
-                        style={{ border: 'none' }}
-                      />
-                    </div>
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 text-sm text-gray-600 mb-2">
-                      <p className="flex items-start gap-2">
-                        <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-xs leading-relaxed">Jika preview tidak muncul, silakan unduh file melalui tombol di bawah.</span>
-                      </p>
-                    </div>
+                    {/* Denah Situasi PDF */}
                     <a 
                       href="/Denah%20Situasi%20Gedung%20BPK%20Bali.pdf" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-full bg-gray-700 text-white py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                      className="mt-4 w-full bg-gray-700 text-white py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
                     >
                       <FileText className="w-4 h-4" />
                       Lihat/Unduh Denah Situasi (PDF)
@@ -672,16 +658,6 @@ const App = () => {
                 </button>
                 <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                     <div className="p-4 pt-0">
-                        {/* PDF Preview */}
-                        <div className="w-full h-80 bg-gray-100 rounded-lg border border-gray-200 mb-4 overflow-hidden shadow-inner">
-                             <iframe 
-                                src="/Denah Parkir.pdf#view=FitH&toolbar=0&navpanes=0" 
-                                title="Preview Denah Parkir"
-                                className="w-full h-full"
-                                style={{ border: 'none' }}
-                             />
-                        </div>
-
                         {/* Area Parkir Legend */}
                         <div className="mb-3">
                           <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Area Parkir</p>
@@ -713,14 +689,6 @@ const App = () => {
                           </div>
                         </div>
 
-                        <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 text-sm text-gray-600 mb-3">
-                           <p className="flex items-start gap-2">
-                             <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                             <span className="leading-relaxed">
-                               Jika preview tidak muncul, silakan unduh file melalui tombol di bawah.
-                             </span>
-                           </p>
-                        </div>
                         <a 
                             href="/Denah Parkir.pdf" 
                             target="_blank" 
@@ -973,9 +941,19 @@ const App = () => {
               <Info className="w-5 h-5 text-yellow-700" />
               Informasi
             </h3>
-            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-              <h4 className="font-medium mb-3">Kontak</h4>
-              <div className="space-y-3">
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <button
+                onClick={() => setIsKontakOpen(!isKontakOpen)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-2 font-semibold text-lg">
+                  <Phone className="w-5 h-5 text-yellow-700" />
+                  Kontak
+                </span>
+                <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isKontakOpen ? 'rotate-90' : ''}`} />
+              </button>
+              <div className={`transition-all duration-300 ease-in-out ${isKontakOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+              <div className="p-4 pt-0 space-y-3">
                 {/* Administrasi Perjalanan Dinas */}
                 <div>
                   <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1.5">Administrasi Perjalanan Dinas</p>
@@ -1024,6 +1002,7 @@ const App = () => {
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
             <FooterSection />
