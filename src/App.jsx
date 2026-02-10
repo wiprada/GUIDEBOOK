@@ -533,7 +533,7 @@ const App = () => {
                  <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isRundownOpen ? 'rotate-90' : ''}`} />
               </button>
               
-              <div className={`transition-all duration-300 ease-in-out ${isRundownOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+              <div className={`transition-all duration-300 ease-in-out ${isRundownOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                 <div className="p-4 pt-0 space-y-2">
                   {agenda.map((item, index) => (
                     <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -541,13 +541,13 @@ const App = () => {
                         onClick={() => toggleAgenda(index)}
                         className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
                       >
-                        <div className="flex items-start gap-3">
-                          <span className="text-yellow-700 text-xs font-mono font-bold pt-0.5 min-w-[5.5rem] whitespace-nowrap">{item.time}</span>
-                          <span className="font-medium text-sm text-gray-800 line-clamp-1">{item.title}</span>
+                        <div className="flex flex-col gap-1 items-start">
+                          <span className="text-yellow-700 text-xs font-mono font-bold">{item.time}</span>
+                          <span className="font-medium text-sm text-gray-800 text-left">{item.title}</span>
                         </div>
-                        <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${openAgendaIndex === index ? 'rotate-90' : ''}`} />
+                        <ChevronRight className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${openAgendaIndex === index ? 'rotate-90' : ''}`} />
                       </button>
-                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="p-4 pt-0 bg-gray-50 border-t border-gray-100 text-sm text-gray-600">
                           <p className="font-medium text-gray-800 mb-2">{item.title}</p>
                           <div className="space-y-3 text-xs">
