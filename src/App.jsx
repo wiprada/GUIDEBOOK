@@ -26,7 +26,11 @@ const App = () => {
       if (openFn) openFn(true);
       setTimeout(() => {
         const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (el) {
+          const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+          const y = el.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
       }, 150);
     }, 100);
   };
