@@ -378,7 +378,7 @@ const App = () => {
 
         <div className="text-center relative z-10 w-full px-6 flex flex-col items-center h-full py-8 justify-between">
            {/* Logo & Agency Name Section - Top Center */}
-           <div className="flex flex-col items-center mt-12 animate-slide-down">
+           <div className="flex flex-col items-center mt-4 animate-slide-down">
               <div className="relative w-24 h-24 mx-auto mb-4">
                 <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
                 <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-500/80 bg-white/95 p-1" />
@@ -398,6 +398,12 @@ const App = () => {
                 <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-3"></div>
                 
                 <p className="text-xl font-serif text-white tracking-wide drop-shadow-md opacity-95 text-center">Shalom</p>
+                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent my-3"></div>
+                
+                <p className="text-xl font-serif text-white tracking-wide drop-shadow-md opacity-95 text-center">Namo Buddhaya</p>
+                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent my-3"></div>
+                
+                <p className="text-xl font-serif text-white tracking-wide drop-shadow-md opacity-95 text-center">Rahayu</p>
              </div>
            </div>
         </div>
@@ -467,21 +473,25 @@ const App = () => {
                 <div className={`transition-all duration-300 ease-in-out ${isVenueOpen ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                   <img src="/Gedung%20BPK%20Bali.png" alt="Gedung BPK Perwakilan Provinsi Bali" className="w-full h-40 object-cover" />
                   <div className="p-4">
-                    <p className="font-medium flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-yellow-700" />
-                      BPK Perwakilan Provinsi Bali
-                    </p>
-                    <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
-                      <Calendar className="w-4 h-4 text-yellow-700" />
-                      12 Februari 2026
-                    </p>
-                    <button
-                      onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
-                      className="mt-3 w-full bg-yellow-50 text-yellow-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-yellow-200 hover:bg-yellow-100 transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Buka di Google Maps
-                    </button>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-medium flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-yellow-700" />
+                          BPK Perwakilan Provinsi Bali
+                        </p>
+                        <p className="text-sm text-gray-500 flex items-center gap-2 mt-2">
+                          <Calendar className="w-4 h-4 text-yellow-700" />
+                          12 Februari 2026
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => openMap('BPK Perwakilan Provinsi Bali')}
+                        className="w-9 h-9 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-full flex items-center justify-center transition-colors flex-shrink-0"
+                        title="Buka di Google Maps"
+                      >
+                        <ExternalLink className="w-4 h-4 text-yellow-700" />
+                      </button>
+                    </div>
 
                     {/* Denah Situasi PDF Preview */}
                     <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mt-4 mb-2">Denah Situasi Gedung</p>
@@ -964,7 +974,7 @@ const App = () => {
               Informasi
             </h3>
             <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-              <h4 className="font-medium mb-3">Kontak Panitia</h4>
+              <h4 className="font-medium mb-3">Kontak</h4>
               <div className="space-y-3">
                 {/* Administrasi Perjalanan Dinas */}
                 <div>
