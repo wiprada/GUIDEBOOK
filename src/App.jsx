@@ -16,6 +16,7 @@ const App = () => {
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isVenueOpen, setIsVenueOpen] = useState(false);
   const [isKontakOpen, setIsKontakOpen] = useState(false);
+  const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
 
   const toggleAgenda = (index) => {
@@ -505,6 +506,33 @@ const App = () => {
                       Lihat/Unduh Denah Situasi (PDF)
                     </a>
                   </div>
+                </div>
+            </div>
+
+            {/* Informasi Umum Kegiatan */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <button 
+                    onClick={() => setIsInfoUmumOpen(!isInfoUmumOpen)}
+                    className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+                >
+                    <span className="flex items-center gap-2 font-semibold text-lg">
+                        <Info className="w-5 h-5 text-yellow-700" />
+                        Informasi Umum Kegiatan Entry Meeting
+                    </span>
+                    <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isInfoUmumOpen ? 'rotate-90' : ''}`} />
+                </button>
+                <div className={`transition-all duration-300 ease-in-out ${isInfoUmumOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                    <div className="p-4 pt-0">
+                        <a 
+                            href="/Informasi%20Umum%20Entry%20Meeting%20LKPD%202025%20DJPKN%20VI%20per%2010%20Feb%20pk%2020.20.pdf" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                        >
+                            <FileText className="w-4 h-4" />
+                            Lihat/Unduh Informasi Umum (PDF)
+                        </a>
+                    </div>
                 </div>
             </div>
 
