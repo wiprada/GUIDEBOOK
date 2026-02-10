@@ -19,6 +19,12 @@ const App = () => {
   const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
 
+  // Quick navigation helper
+  const navigateTo = (tab, openFn) => {
+    setActiveTab(tab);
+    if (openFn) setTimeout(() => openFn(true), 100);
+  };
+
   const toggleAgenda = (index) => {
     setOpenAgendaIndices(prev => 
       prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
@@ -451,6 +457,67 @@ const App = () => {
             </div>
 
             {/* Aesthetic Image Section Removed */}
+
+            {/* Tautan Cepat */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Tautan Cepat</h3>
+              <div className="grid grid-cols-2 gap-2.5">
+                <button
+                  onClick={() => navigateTo('acara', setIsPresensiOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-4.5 h-4.5 text-green-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Presensi</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('acara', setIsVenueOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-yellow-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-4.5 h-4.5 text-yellow-700" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Denah Lokasi Acara</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('acara', setIsRundownOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-4.5 h-4.5 text-orange-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Rundown Acara</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('acara', setIsParkingOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Car className="w-4.5 h-4.5 text-gray-700" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Denah Parkir</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('acara', setIsZoomOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Video className="w-4.5 h-4.5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Link Zoom</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('info', setIsKontakOpen)}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4.5 h-4.5 text-emerald-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Narahubung</span>
+                </button>
+              </div>
+            </div>
 
             {/* Lokasi Removed from Home */}
             
