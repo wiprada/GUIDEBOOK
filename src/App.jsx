@@ -581,13 +581,23 @@ const App = () => {
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isParkingOpen ? 'rotate-90' : ''}`} />
                 </button>
-                <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                     <div className="p-4 pt-0">
+                        {/* PDF Preview */}
+                        <div className="w-full h-80 bg-gray-100 rounded-lg border border-gray-200 mb-4 overflow-hidden shadow-inner">
+                             <iframe 
+                                src="/Denah Parkir.pdf#view=FitH&toolbar=0&navpanes=0" 
+                                title="Preview Denah Parkir"
+                                className="w-full h-full"
+                                style={{ border: 'none' }}
+                             />
+                        </div>
+
                         <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 text-sm text-gray-600 mb-3">
                            <p className="flex items-start gap-2">
                              <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
                              <span className="leading-relaxed">
-                               Silakan unduh atau lihat denah parkir melalui tombol di bawah ini. Pastikan Anda parkir di area yang telah ditentukan.
+                               Jika preview tidak muncul, silakan unduh file melalui tombol di bawah.
                              </span>
                            </p>
                         </div>
