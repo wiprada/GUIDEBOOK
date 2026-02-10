@@ -20,9 +20,15 @@ const App = () => {
   const [sortBy, setSortBy] = useState('default');
 
   // Quick navigation helper
-  const navigateTo = (tab, openFn) => {
+  const navigateTo = (tab, openFn, sectionId) => {
     setActiveTab(tab);
-    if (openFn) setTimeout(() => openFn(true), 100);
+    setTimeout(() => {
+      if (openFn) openFn(true);
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    }, 100);
   };
 
   const toggleAgenda = (index) => {
@@ -463,7 +469,7 @@ const App = () => {
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Tautan Cepat</h3>
               <div className="grid grid-cols-2 gap-2.5">
                 <button
-                  onClick={() => navigateTo('acara', setIsPresensiOpen)}
+                  onClick={() => navigateTo('acara', setIsPresensiOpen, 'section-presensi')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -472,7 +478,7 @@ const App = () => {
                   <span className="text-sm font-medium text-gray-700">Presensi</span>
                 </button>
                 <button
-                  onClick={() => navigateTo('acara', setIsVenueOpen)}
+                  onClick={() => navigateTo('acara', setIsVenueOpen, 'section-venue')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-yellow-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -481,7 +487,7 @@ const App = () => {
                   <span className="text-sm font-medium text-gray-700">Denah Lokasi Acara</span>
                 </button>
                 <button
-                  onClick={() => navigateTo('acara', setIsRundownOpen)}
+                  onClick={() => navigateTo('acara', setIsRundownOpen, 'section-rundown')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -490,7 +496,7 @@ const App = () => {
                   <span className="text-sm font-medium text-gray-700">Rundown Acara</span>
                 </button>
                 <button
-                  onClick={() => navigateTo('acara', setIsParkingOpen)}
+                  onClick={() => navigateTo('acara', setIsParkingOpen, 'section-parking')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -499,7 +505,7 @@ const App = () => {
                   <span className="text-sm font-medium text-gray-700">Denah Parkir</span>
                 </button>
                 <button
-                  onClick={() => navigateTo('acara', setIsZoomOpen)}
+                  onClick={() => navigateTo('acara', setIsZoomOpen, 'section-zoom')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -508,7 +514,7 @@ const App = () => {
                   <span className="text-sm font-medium text-gray-700">Link Zoom</span>
                 </button>
                 <button
-                  onClick={() => navigateTo('info', setIsKontakOpen)}
+                  onClick={() => navigateTo('info', setIsKontakOpen, 'section-kontak')}
                   className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
                 >
                   <div className="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -528,14 +534,14 @@ const App = () => {
         {activeTab === 'acara' && (
           <div className="space-y-6">
              {/* Collapsible Venue Section */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-venue" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <button 
                     onClick={() => setIsVenueOpen(!isVenueOpen)}
                     className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
                 >
                     <span className="flex items-center gap-2 font-semibold text-lg">
                         <MapPin className="w-5 h-5 text-yellow-700" />
-                        Venue & Denah Situasi
+                        Venue & Denah Lokasi Acara
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isVenueOpen ? 'rotate-90' : ''}`} />
                 </button>
@@ -570,7 +576,7 @@ const App = () => {
                       className="mt-4 w-full bg-gray-700 text-white py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
                     >
                       <FileText className="w-4 h-4" />
-                      Lihat/Unduh Denah Situasi (PDF)
+                      Lihat/Unduh Denah Lokasi Acara (.pdf)
                     </a>
                   </div>
                 </div>
@@ -604,7 +610,7 @@ const App = () => {
             </div>
 
             {/* Link Presensi */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-presensi" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <button 
                     onClick={() => setIsPresensiOpen(!isPresensiOpen)}
                     className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
@@ -650,7 +656,7 @@ const App = () => {
             </div>
 
             {/* Link Zoom Meeting */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-zoom" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <button 
                     onClick={() => setIsZoomOpen(!isZoomOpen)}
                     className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
@@ -687,7 +693,7 @@ const App = () => {
             </div>
 
             {/* Collapsible Rundown Section */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-rundown" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
               <button 
                 onClick={() => setIsRundownOpen(!isRundownOpen)}
                 className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
@@ -740,7 +746,7 @@ const App = () => {
             </div>
 
             {/* Collapsible Parking Plan Section */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-parking" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                 <button 
                     onClick={() => setIsParkingOpen(!isParkingOpen)}
                     className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
@@ -791,7 +797,7 @@ const App = () => {
                             className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
                         >
                             <FileText className="w-4 h-4" />
-                            Lihat/Unduh Denah Parkir (PDF)
+                            Lihat/Unduh Denah Parkir (.pdf)
                         </a>
                     </div>
                 </div>
@@ -1036,7 +1042,7 @@ const App = () => {
               <Info className="w-5 h-5 text-yellow-700" />
               Informasi
             </h3>
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div id="section-kontak" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
               <button
                 onClick={() => setIsKontakOpen(!isKontakOpen)}
                 className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
