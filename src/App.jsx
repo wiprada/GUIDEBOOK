@@ -1016,14 +1016,6 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-              <h4 className="font-medium mb-2">Tentang Acara</h4>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Entry Meeting Pemeriksaan LKPD Tahun Anggaran 2025 adalah pertemuan awal 
-                antara tim pemeriksa BPK dengan entitas yang diperiksa untuk menyamakan 
-                persepsi dan menyepakati jadwal pemeriksaan.
-              </p>
-            </div>
             <FooterSection />
           </div>
         )}
