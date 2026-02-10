@@ -11,6 +11,7 @@ const App = () => {
   const [filters, setFilters] = useState({});
   const [openAgendaIndices, setOpenAgendaIndices] = useState([]); // Changed to array
   const [isRundownOpen, setIsRundownOpen] = useState(false);
+  const [isParkingOpen, setIsParkingOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isVenueOpen, setIsVenueOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
@@ -362,38 +363,37 @@ const App = () => {
   // Splash Screen
   if (loading || showSplash) {
     return (
-      <div className={`fixed inset-0 z-[60] bg-zinc-200 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`fixed inset-0 z-[60] bg-gray-900 flex flex-col items-center justify-center transition-opacity duration-700 ${loading ? 'opacity-100' : 'opacity-0'}`}>
         {/* Fullscreen Background Image */}
-        <div className="absolute inset-0 z-0 flex items-end justify-center">
+        <div className="absolute inset-0 z-0">
           <img 
             src="/Couple Bali.jpeg" 
             alt="Couple BPK Bali" 
-            className="w-full h-full object-contain object-bottom"
+            className="w-full h-full object-cover object-bottom"
           />
-          {/* Top gradient for logo visibility if image reaches top */}
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-gray-900/40 to-transparent pointer-events-none"></div>
+          {/* Subtle gradient overlay top/bottom for readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none"></div>
         </div>
 
-        <div className="text-center relative z-10 w-full px-6 flex flex-col items-center h-full pt-12 pb-8 justify-between">
+        <div className="text-center relative z-10 w-full px-6 flex flex-col items-center h-full py-8 justify-between">
            {/* Logo & Agency Name Section - Top Center */}
-           <div className="flex flex-col items-center mt-6">
-              <div className="relative w-24 h-24 mx-auto mb-3">
-                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-40 animate-spin-slow"></div>
-                <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-500/50 bg-white/95 p-1" />
+           <div className="flex flex-col items-center mt-12 animate-slide-down">
+              <div className="relative w-24 h-24 mx-auto mb-4">
+                <div className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
+                <img src="/BPK.png" alt="Logo BPK" className="relative w-24 h-24 rounded-full object-contain shadow-2xl border-2 border-yellow-500/80 bg-white/95 p-1" />
               </div>
-              <p className="text-yellow-100 text-[10px] tracking-[0.2em] uppercase font-bold drop-shadow-lg bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-[2px] border border-white/10">
+              <p className="text-yellow-50 text-[10px] tracking-[0.2em] uppercase font-bold drop-shadow-xl bg-black/30 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
                 Badan Pemeriksa Keuangan
               </p>
            </div>
 
-           {/* Greetings Section - Floating Middle/Lower */}
-           {/* Lifted up to be roughly "below elbows" */}
-           <div className="mb-24 w-full max-w-xs">
-             <div className="p-5 rounded-2xl border border-white/10 shadow-2xl bg-black/30 backdrop-blur-md">
-                <h1 className="text-2xl font-serif text-white tracking-widest mb-2 drop-shadow-md font-medium">Om Swastiastu</h1>
-                <div className="w-12 h-0.5 bg-yellow-500/50 mx-auto mb-2 rounded-full"></div>
-                <p className="text-white text-xs font-serif tracking-wide mb-1.5 drop-shadow-sm opacity-90">Assalamualaikum Warahmatullahi Wabarakatuh</p>
-                <p className="text-white text-base font-serif tracking-wide drop-shadow-sm opacity-90">Shalom</p>
+           {/* Greetings Section - Floating Middle */}
+           <div className="mb-20 w-full max-w-xs animate-slide-up">
+             <div className="p-6 rounded-2xl border border-white/10 shadow-2xl bg-black/20 backdrop-blur-md">
+                <h1 className="text-2xl font-serif text-white tracking-widest mb-3 drop-shadow-lg font-medium">Om Swastiastu</h1>
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto mb-3"></div>
+                <p className="text-white text-xs font-serif tracking-wide mb-2 drop-shadow-md opacity-95">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+                <p className="text-white text-lg font-serif tracking-wide drop-shadow-md opacity-95">Shalom</p>
              </div>
            </div>
         </div>
@@ -568,6 +568,42 @@ const App = () => {
                 </div>
               </div>
             </div>
+
+            {/* Collapsible Parking Plan Section */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <button 
+                    onClick={() => setIsParkingOpen(!isParkingOpen)}
+                    className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+                >
+                    <span className="flex items-center gap-2 font-semibold text-lg">
+                        <Car className="w-5 h-5 text-gray-700" />
+                        Denah Parkir
+                    </span>
+                    <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isParkingOpen ? 'rotate-90' : ''}`} />
+                </button>
+                <div className={`transition-all duration-300 ease-in-out ${isParkingOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                    <div className="p-4 pt-0">
+                        <div className="bg-gray-50 rounded-lg p-4 border border-gray-100 text-sm text-gray-600 mb-3">
+                           <p className="flex items-start gap-2">
+                             <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                             <span className="leading-relaxed">
+                               Silakan unduh atau lihat denah parkir melalui tombol di bawah ini. Pastikan Anda parkir di area yang telah ditentukan.
+                             </span>
+                           </p>
+                        </div>
+                        <a 
+                            href="/Denah Parkir.pdf" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                        >
+                            <FileText className="w-4 h-4" />
+                            Lihat / Unduh Denah (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <FooterSection />
           </div>
         )}
