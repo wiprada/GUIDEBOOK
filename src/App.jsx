@@ -12,6 +12,7 @@ const App = () => {
   const [openAgendaIndices, setOpenAgendaIndices] = useState([]); // Changed to array
   const [isRundownOpen, setIsRundownOpen] = useState(false);
   const [isParkingOpen, setIsParkingOpen] = useState(false);
+  const [isPresensiOpen, setIsPresensiOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isVenueOpen, setIsVenueOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
@@ -388,12 +389,15 @@ const App = () => {
            </div>
 
            {/* Greetings Section - Floating Middle */}
-           <div className="mb-20 w-full max-w-xs animate-slide-up">
-             <div className="p-6 rounded-2xl border border-white/10 shadow-2xl bg-black/20 backdrop-blur-md">
-                <h1 className="text-2xl font-serif text-white tracking-widest mb-3 drop-shadow-lg font-medium">Om Swastiastu</h1>
-                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto mb-3"></div>
-                <p className="text-white text-xs font-serif tracking-wide mb-2 drop-shadow-md opacity-95">Assalamualaikum Warahmatullahi Wabarakatuh</p>
-                <p className="text-white text-lg font-serif tracking-wide drop-shadow-md opacity-95">Shalom</p>
+           <div className="mb-20 w-full max-w-sm animate-slide-up">
+             <div className="p-6 rounded-2xl border border-white/10 shadow-2xl bg-black/20 backdrop-blur-md flex flex-col items-center">
+                <h1 className="text-xl font-serif text-white tracking-widest mb-2 drop-shadow-lg font-medium text-center">Om Swastiastu</h1>
+                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-3"></div>
+                
+                <p className="text-xl font-serif text-white tracking-wide mb-2 drop-shadow-md opacity-95 text-center leading-relaxed">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-3"></div>
+                
+                <p className="text-xl font-serif text-white tracking-wide drop-shadow-md opacity-95 text-center">Shalom</p>
              </div>
            </div>
         </div>
@@ -478,6 +482,52 @@ const App = () => {
                       <ExternalLink className="w-4 h-4" />
                       Buka di Google Maps
                     </button>
+                  </div>
+                </div>
+            </div>
+
+            {/* Link Presensi */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <button 
+                    onClick={() => setIsPresensiOpen(!isPresensiOpen)}
+                    className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+                >
+                    <span className="flex items-center gap-2 font-semibold text-lg">
+                        <FileText className="w-5 h-5 text-green-600" />
+                        Link Presensi
+                    </span>
+                    <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isPresensiOpen ? 'rotate-90' : ''}`} />
+                </button>
+                <div className={`transition-all duration-300 ease-in-out ${isPresensiOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                  <div className="p-4">
+                    <p className="text-sm text-gray-600 mb-3">
+                        Silakan isi daftar hadir berikut untuk kehadiran Anda.
+                    </p>
+                    <div className="w-full h-[400px] bg-gray-100 rounded-lg overflow-hidden mb-3 border border-gray-200">
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://forms.office.com/r/Zy6Q0JZyeH?embed=true" 
+                            frameBorder="0" 
+                            marginWidth="0" 
+                            marginHeight="0" 
+                            style={{ border: 'none', maxWidth: '100%', maxHeight: '100vh' }} 
+                            allowFullScreen 
+                            webkitallowfullscreen 
+                            mozallowfullscreen 
+                            msallowfullscreen
+                            title="Form Presensi"
+                        />
+                    </div>
+                    <a
+                      href="https://forms.office.com/r/Zy6Q0JZyeH"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-green-50 text-green-700 py-2 rounded-lg text-sm flex items-center justify-center gap-2 border border-green-200 hover:bg-green-100 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Buka Form di Browser
+                    </a>
                   </div>
                 </div>
             </div>
