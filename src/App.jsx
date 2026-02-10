@@ -9,14 +9,16 @@ const App = () => {
   const [subpageData, setSubpageData] = useState([]);
   const [subpageLoading, setSubpageLoading] = useState(false);
   const [filters, setFilters] = useState({});
-  const [openAgendaIndex, setOpenAgendaIndex] = useState(null);
+  const [openAgendaIndices, setOpenAgendaIndices] = useState([]); // Changed to array
   const [isRundownOpen, setIsRundownOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isVenueOpen, setIsVenueOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
 
   const toggleAgenda = (index) => {
-    setOpenAgendaIndex(openAgendaIndex === index ? null : index);
+    setOpenAgendaIndices(prev => 
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
   };
 
   const SPREADSHEET_ID = '2PACX-1vTWG133GYpDvdJOH_j4qM8HnhKQOdwzNivd1q-QrUzLfaxlG07JPKa1_YapTpqd_E26A9TMK4hRbYD9';
@@ -545,11 +547,11 @@ const App = () => {
                           <span className="text-yellow-700 text-xs font-mono font-bold">{item.time}</span>
                           <span className="font-medium text-sm text-gray-800 text-left">{item.title}</span>
                         </div>
-                        <ChevronRight className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${openAgendaIndex === index ? 'rotate-90' : ''}`} />
+                        <ChevronRight className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${openAgendaIndices.includes(index) ? 'rotate-90' : ''}`} />
                       </button>
-                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndices.includes(index) ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="p-4 pt-0 bg-gray-50 border-t border-gray-100 text-sm text-gray-600">
-                          <p className="font-medium text-gray-800 mb-2">{item.title}</p>
+                          {/* Title Removed */}
                           <div className="space-y-3 text-xs">
                             <p className="flex items-center gap-2">
                               <MapPin className="w-3 h-3 text-yellow-700 flex-shrink-0" />
