@@ -135,18 +135,96 @@ const App = () => {
   // --- DATA SECTIONS ---
 
   const agenda = [
-    { time: '13.30 – 13.45', title: 'Penyambutan Tamu (Luring)' },
-    { time: '13.45 – 13.55', title: 'Tarian Pembukaan' },
-    { time: '13.55 – 14.05', title: 'Pembukaan oleh MC' },
-    { time: '14.05 – 14.10', title: 'Lagu Kebangsaan Indonesia Raya' },
-    { time: '14.10 – 14.15', title: 'Pembacaan Doa' },
-    { time: '14.15 – 14.25', title: 'Penayangan Video Kaleidoskop Kegiatan BPK dengan Pemerintah Provinsi Tahun 2025-2026' },
-    { time: '14.25 – 14.55', title: 'Sambutan Anggota VI BPK' },
-    { time: '14.55 – 15.10', title: 'Sambutan Gubernur Kalimantan Timur sebagai Ketua APPSI mewakili para Kepala Daerah di lingkungan Ditjen PKN VI' },
-    { time: '15.10 – 15.30', title: 'Sambutan Wakil Menteri Dalam Negeri, Ibu Ribka Haluk' },
-    { time: '15.30 – 16.00', title: 'Dialog Anggota VI dan Wamendagri dengan Para Gubernur' },
-    { time: '16.00 – 16.15', title: 'Penyerahan Surat Tugas secara Simbolis dan Foto Bersama' },
-    { time: '16.15 – 16.20', title: 'Penutup' },
+    { 
+      time: '11.00 - 12.30 WITA', 
+      title: 'Penyambutan Tamu dan Makan Siang',
+      location: 'Lobby',
+      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di Wilayah DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta'
+    },
+    { 
+      time: '12.30 - 13.00 WITA', 
+      title: 'Shalat',
+      location: 'Masjid Baitul Hasib BPK Perwakilan Bali',
+      description: ''
+    },
+    { 
+      time: '13.00 - 13.30 WITA', 
+      title: 'Foto Bersama',
+      location: 'Lapangan Depan Kantor BPK Perwakilan Bali',
+      description: 'a. Dipandu MC pembagian udeng atau selendang untuk para peserta\nb. Sesi foto Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur Bali, Gubernur Kalimantan Timur, Tenaga Ahli BPK, para Sekda dan para Inspektur\nc. Para Sekda dan Inspektur masuk ke ruangan Auditorium Bima\nd. Sesi foto Anggota BPK, Dirjen PKN VI, Wamendagri, para Gubernur, dan para Kalan\ne. Peserta lainnya menuju Auditorium Bima'
+    },
+    { 
+      time: '13.45 - 13.55 WITA', 
+      title: 'Tarian Pembukaan',
+      location: 'Auditorium Bima',
+      description: 'Suguhan Tari Selat Segara persembahan dari Institut Seni Indonesia Bali'
+    },
+    { 
+      time: '13.55 - 14.05 WITA', 
+      title: 'Pembukaan oleh MC',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.05 - 14.10 WITA', 
+      title: 'Lagu Kebangsaan Indonesia Raya',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.10 - 14.15 WITA', 
+      title: 'Pembacaan Doa',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.15 - 14.25 WITA', 
+      title: 'Penayangan Video Kaleidoskop Kegiatan BPK dengan Pemerintah',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.25 - 14.55 WITA', 
+      title: 'Sambutan Anggota VI BPK',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.55 - 15.10 WITA', 
+      title: 'Sambutan Gubernur Kalimantan Timur sebagai Ketua APPSI mewakili para Kepala Daerah di lingkungan DJPKN VI',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '15.10 - 15.30 WITA', 
+      title: 'Sambutan Wakil Menteri Dalam Negeri, Ibu Ribka Haluk',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '15.30 - 16.00 WITA', 
+      title: 'Dialog Anggota VI BPK dan Wamendagri dengan para Gubernur',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '16.00 - 16.30 WITA', 
+      title: 'Penyerahan Surat Tugas Pemeriksaan secara simbolis',
+      location: 'Auditorium Bima',
+      description: 'a. Secara simbolis Kalimantan Timur mewakili seluruh provinsi\nb. Secara simbolis Bali sebagai tuan rumah'
+    },
+    { 
+      time: '16.15 - 16.20 WITA', 
+      title: 'Penutup',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '16.20 - 17.20 WITA', 
+      title: 'Pembubaran Acara',
+      location: 'Lobby',
+      description: 'Dengan pengaturan urutan sebagai berikut:\na. Gubernur Bali\nb. Anggota VI BPK dan Dirjen PKN VI BPK didampingi Direktur di Lingkungan DJPKN VI\nc. Para Gubernur Wilayah Kalimantan\nd. Para Gubernur Wilayah Maluku\ne. Para Gubernur Wilayah Nusa Tenggara\nf. Para Gubernur Wilayah Sulawesi\ng. Para Gubernur Wilayah Papua'
+    }
   ];
 
   const exploreData = [];
@@ -469,18 +547,20 @@ const App = () => {
                         </div>
                         <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${openAgendaIndex === index ? 'rotate-90' : ''}`} />
                       </button>
-                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className={`transition-all duration-300 ease-in-out ${openAgendaIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="p-4 pt-0 bg-gray-50 border-t border-gray-100 text-sm text-gray-600">
                           <p className="font-medium text-gray-800 mb-2">{item.title}</p>
-                          <div className="space-y-1 text-xs">
+                          <div className="space-y-3 text-xs">
                             <p className="flex items-center gap-2">
-                              <MapPin className="w-3 h-3 text-yellow-700" />
-                              Aula BPK Perwakilan Provinsi Bali
+                              <MapPin className="w-3 h-3 text-yellow-700 flex-shrink-0" />
+                              {item.location}
                             </p>
-                            <p className="flex items-center gap-2">
-                              <Info className="w-3 h-3 text-yellow-700" />
-                              Harap hadir 15 menit sebelum acara dimulai.
-                            </p>
+                            {item.description && (
+                              <div className="flex items-start gap-2">
+                                <Info className="w-3 h-3 text-yellow-700 mt-0.5 flex-shrink-0" />
+                                <div className="whitespace-pre-line leading-relaxed">{item.description}</div>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
