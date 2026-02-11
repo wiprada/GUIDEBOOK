@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter, Video } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter, Video, BookOpen } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -18,6 +18,7 @@ const App = () => {
   const [isKontakOpen, setIsKontakOpen] = useState(false);
   const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isMateriOpen, setIsMateriOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: false });
 
@@ -543,6 +544,15 @@ const App = () => {
                   </div>
                   <span className="text-sm font-medium text-gray-700">Narahubung</span>
                 </button>
+                <button
+                  onClick={() => navigateTo('info', setIsMateriOpen, 'section-materi')}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-4.5 h-4.5 text-indigo-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Materi Kegiatan</span>
+                </button>
               </div>
             </div>
 
@@ -761,7 +771,7 @@ const App = () => {
                  <div className="flex flex-col items-start">
                     <span className="flex items-center gap-2 font-semibold text-lg">
                       <Calendar className="w-5 h-5 text-yellow-700" />
-                      Rundown dan Materi Kegiatan
+                      Rundown Acara
                     </span>
                     <span className="text-xs text-gray-400 ml-7">Klik untuk melihat detil acara dan lokasi.</span>
                  </div>
@@ -1164,6 +1174,31 @@ const App = () => {
                   </div>
                 </div>
               </div>
+              </div>
+            </div>
+
+            {/* Materi Kegiatan */}
+            <div id="section-materi" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <button
+                onClick={() => setIsMateriOpen(!isMateriOpen)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-2 font-semibold text-lg">
+                  <BookOpen className="w-5 h-5 text-yellow-700" />
+                  Materi Kegiatan
+                </span>
+                <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isMateriOpen ? 'rotate-90' : ''}`} />
+              </button>
+              <div className={`transition-all duration-300 ease-in-out ${isMateriOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className="p-4 pt-0">
+                  <div className="flex flex-col items-center justify-center py-8 text-center">
+                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                      <BookOpen className="w-7 h-7 text-gray-400" />
+                    </div>
+                    <p className="text-sm text-gray-500 font-medium">Materi belum tersedia</p>
+                    <p className="text-xs text-gray-400 mt-1">File materi kegiatan akan ditampilkan di sini untuk diunduh</p>
+                  </div>
+                </div>
               </div>
             </div>
 
