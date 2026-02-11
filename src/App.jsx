@@ -664,10 +664,19 @@ const App = () => {
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isInfoUmumOpen ? 'rotate-90' : ''}`} />
                 </button>
-                <div className={`transition-all duration-300 ease-in-out ${isInfoUmumOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-                    <div className="p-4 pt-0">
+                <div className={`transition-all duration-300 ease-in-out ${isInfoUmumOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                    <div className="p-4 pt-0 space-y-3">
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3.5 text-sm text-gray-700 leading-relaxed">
+                            <p className="mb-2">Sehubungan dengan keterbatasan tempat dan menghindari kepadatan saat kehadiran tamu undangan, berikut pembagian alur kedatangan:</p>
+                            <ol className="list-decimal list-outside ml-4 space-y-1.5">
+                                <li>Hanya Gubernur/Wakil Gubernur, Sekretaris Daerah, dan Inspektur yang diarahkan masuk gedung BPK Perwakilan Bali melalui Lobby.</li>
+                                <li>Kepala Perwakilan dan Kepala Bidang Pemeriksaan (hanya yang membidangi provinsi) standby di area Lobby untuk menunggu kedatangan tamu undangan.</li>
+                                <li>Tamu undangan lainnya diarahkan menuju area barat gedung BPK Perwakilan Bali pada tempat yang telah disediakan, melalui jalur sisi selatan gedung BPK Perwakilan Bali.</li>
+                            </ol>
+                            <p className="mt-2">Terima kasih.</p>
+                        </div>
                         <a 
-                            href="/Informasi%20Umum%20Entry%20Meeting%20LKPD%202025%20DJPKN%20VI%20per%2010%20Feb%20pk%2020.20.pdf" 
+                            href="/Informasi%20Umum%20Entry%20Meeting%20LKPD%202025%20DJPKN%20VI.pdf" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
@@ -773,7 +782,7 @@ const App = () => {
                       <Calendar className="w-5 h-5 text-yellow-700" />
                       Rundown Acara
                     </span>
-                    <span className="text-xs text-gray-400 ml-7">Klik untuk melihat detil acara dan lokasi.</span>
+                    <span className="text-xs text-gray-400 ml-7">Klik untuk melihat detil acara dan lokasi.<br /><strong className="font-bold">Kondisi rundown per 11 Februari 2026 15:06 WITA.</strong></span>
                  </div>
                  <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isRundownOpen ? 'rotate-90' : ''}`} />
               </button>
@@ -1173,6 +1182,39 @@ const App = () => {
                     </div>
                   </div>
                 </div>
+                {/* Tim Medis */}
+                <div>
+                  <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1.5">Tim Medis</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Ida Bagus Ketut Sidhastu</p>
+                        <p className="text-xs text-gray-500">082145927454</p>
+                      </div>
+                      <a href="https://wa.me/6282145927454" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">dr. Komang Citra Triani Putri</p>
+                        <p className="text-xs text-gray-500">081246583209</p>
+                      </div>
+                      <a href="https://wa.me/6281246583209" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Dewa Ayu Trisnayanti Meranggi</p>
+                        <p className="text-xs text-gray-500">081353511123</p>
+                      </div>
+                      <a href="https://wa.me/6281353511123" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
               </div>
             </div>
@@ -1190,14 +1232,16 @@ const App = () => {
                 <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isMateriOpen ? 'rotate-90' : ''}`} />
               </button>
               <div className={`transition-all duration-300 ease-in-out ${isMateriOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-                <div className="p-4 pt-0">
-                  <div className="flex flex-col items-center justify-center py-8 text-center">
-                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                      <BookOpen className="w-7 h-7 text-gray-400" />
-                    </div>
-                    <p className="text-sm text-gray-500 font-medium">Materi belum tersedia</p>
-                    <p className="text-xs text-gray-400 mt-1">File materi kegiatan akan ditampilkan di sini untuk diunduh</p>
-                  </div>
+                <div className="p-4 pt-0 space-y-2">
+                  <a
+                    href="/Slide%20Sambutan%20Anggota%20VI%20BPK%20Entry%20Meeting%20LKPD%202025.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Slide Sambutan Anggota VI BPK (PDF)
+                  </a>
                 </div>
               </div>
             </div>
