@@ -176,19 +176,13 @@ const App = () => {
 
   const agenda = [
     { 
-      time: '11.00 - 12.30 WITA', 
-      title: 'Penyambutan Tamu dan Makan Siang',
+      time: '11.00 - 13.30 WITA', 
+      title: 'Penyambutan Tamu, Registrasi, Ramah Tamah dan Ishoma',
       location: 'Lobby',
-      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di lingkungan DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta'
+      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di lingkungan DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta\ne. Shalat Dzuhur'
     },
     { 
-      time: '12.30 - 13.00 WITA', 
-      title: 'Shalat',
-      location: 'Masjid Baitul Hasib BPK Perwakilan Bali',
-      description: ''
-    },
-    { 
-      time: '13.00 - 13.30 WITA', 
+      time: '13.30 - 13.45 WITA', 
       title: 'Foto Bersama',
       location: 'Lapangan Depan Kantor BPK Perwakilan Bali',
       description: 'a. Dipandu MC pembagian udeng atau selendang untuk para peserta\nb. Sesi foto Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur Bali, Gubernur Kalimantan Timur, Tenaga Ahli BPK, para Sekda dan para Inspektur\nc. Para Sekda dan Inspektur masuk ke ruangan Auditorium Bima\nd. Sesi foto Anggota BPK, Dirjen PKN VI, Wamendagri, para Gubernur, dan para Kalan\ne. Peserta lainnya menuju Auditorium Bima'
@@ -219,51 +213,51 @@ const App = () => {
     },
     { 
       time: '14.15 - 14.25 WITA', 
+      title: 'Laporan Penyelenggaraan Kegiatan oleh Kepala BPK Perwakilan Provinsi Bali',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.25 - 14.30 WITA', 
       title: 'Penayangan Video Kaleidoskop Kegiatan BPK dengan Pemerintah',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '14.25 - 14.55 WITA', 
-      title: 'Sambutan Anggota VI BPK',
-      location: 'Auditorium Bima',
-      description: ''
-    },
-    { 
-      time: '14.55 - 15.10 WITA', 
+      time: '14.30 - 14.45 WITA', 
       title: 'Sambutan Gubernur Kalimantan Timur sebagai Ketua APPSI mewakili para Kepala Daerah di lingkungan DJPKN VI',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '15.10 - 15.30 WITA', 
+      time: '14.45 - 15.05 WITA', 
       title: 'Sambutan Wakil Menteri Dalam Negeri, Ibu Ribka Haluk',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '15.30 - 16.00 WITA', 
+      time: '15.05 - 15.35 WITA', 
+      title: 'Sambutan Anggota VI BPK',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '15.35 - 16.05 WITA', 
       title: 'Dialog Anggota VI BPK dan Wamendagri dengan para Gubernur',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '16.00 - 16.30 WITA', 
-      title: 'Penyerahan Surat Tugas Pemeriksaan secara simbolis',
-      location: 'Auditorium Bima',
-      description: 'a. Secara simbolis Kalimantan Timur mewakili seluruh provinsi\nb. Secara simbolis Bali sebagai tuan rumah'
-    },
-    { 
-      time: '16.15 - 16.20 WITA', 
-      title: 'Penutup',
+      time: '16.05 - 16.20 WITA', 
+      title: 'Penyerahan Surat Tugas Pemeriksaan LKPD Tahun 2025 dan Foto Bersama',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '16.20 - 17.20 WITA', 
-      title: 'Pembubaran Acara',
-      location: 'Lobby',
-      description: 'Dengan pengaturan urutan sebagai berikut:\na. Gubernur Bali\nb. Anggota VI BPK dan Dirjen PKN VI BPK didampingi Direktur di Lingkungan DJPKN VI\nc. Para Gubernur Wilayah Kalimantan\nd. Para Gubernur Wilayah Maluku\ne. Para Gubernur Wilayah Nusa Tenggara\nf. Para Gubernur Wilayah Sulawesi\ng. Para Gubernur Wilayah Papua'
+      time: '16.20 - 16.35 WITA', 
+      title: 'Penutup',
+      location: 'Auditorium Bima',
+      description: ''
     }
   ];
 
