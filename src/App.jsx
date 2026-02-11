@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter, Video } from 'lucide-react';
+import { Calendar, MapPin, Info, Phone, Home, User, ExternalLink, ChevronRight, Award, Flower2, Utensils, Coffee, Palmtree, BarChart3, FileText, LayoutGrid, Car, MonitorPlay, Hotel, Cross, Loader2, ArrowLeft, Youtube, Star, Filter, Video, BookOpen } from 'lucide-react';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -18,6 +18,7 @@ const App = () => {
   const [isKontakOpen, setIsKontakOpen] = useState(false);
   const [isInfoUmumOpen, setIsInfoUmumOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isMateriOpen, setIsMateriOpen] = useState(false);
   const [sortBy, setSortBy] = useState('default');
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: false });
 
@@ -176,19 +177,13 @@ const App = () => {
 
   const agenda = [
     { 
-      time: '11.00 - 12.30 WITA', 
-      title: 'Penyambutan Tamu dan Makan Siang',
+      time: '11.00 - 13.30 WITA', 
+      title: 'Penyambutan Tamu, Registrasi, Ramah Tamah dan Ishoma',
       location: 'Lobby',
-      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di lingkungan DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta'
+      description: 'a. Pengalungan bunga untuk Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, dan Gubernur (diwakili oleh Gubernur Bali dan Gubernur Kalimantan Timur)\nb. Makan siang dan ramah tamah Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur, Tenaga Ahli BPK, Direktur di lingkungan DJPKN VI, Kalan Bali, Kalan Kaltim, Kalan Papua, dan Kalan Sulawesi....\nc. Makan siang dan ramah tamah seluruh Kalan, Sekda, dan Inspektur\nd. Makan siang dan ramah tamah para peserta\ne. Shalat Dzuhur'
     },
     { 
-      time: '12.30 - 13.00 WITA', 
-      title: 'Shalat',
-      location: 'Masjid Baitul Hasib BPK Perwakilan Bali',
-      description: ''
-    },
-    { 
-      time: '13.00 - 13.30 WITA', 
+      time: '13.30 - 13.45 WITA', 
       title: 'Foto Bersama',
       location: 'Lapangan Depan Kantor BPK Perwakilan Bali',
       description: 'a. Dipandu MC pembagian udeng atau selendang untuk para peserta\nb. Sesi foto Anggota VI BPK, Dirjen PKN VI BPK, Wamendagri, Gubernur Bali, Gubernur Kalimantan Timur, Tenaga Ahli BPK, para Sekda dan para Inspektur\nc. Para Sekda dan Inspektur masuk ke ruangan Auditorium Bima\nd. Sesi foto Anggota BPK, Dirjen PKN VI, Wamendagri, para Gubernur, dan para Kalan\ne. Peserta lainnya menuju Auditorium Bima'
@@ -219,51 +214,51 @@ const App = () => {
     },
     { 
       time: '14.15 - 14.25 WITA', 
+      title: 'Laporan Penyelenggaraan Kegiatan oleh Kepala BPK Perwakilan Provinsi Bali',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '14.25 - 14.30 WITA', 
       title: 'Penayangan Video Kaleidoskop Kegiatan BPK dengan Pemerintah',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '14.25 - 14.55 WITA', 
-      title: 'Sambutan Anggota VI BPK',
-      location: 'Auditorium Bima',
-      description: ''
-    },
-    { 
-      time: '14.55 - 15.10 WITA', 
+      time: '14.30 - 14.45 WITA', 
       title: 'Sambutan Gubernur Kalimantan Timur sebagai Ketua APPSI mewakili para Kepala Daerah di lingkungan DJPKN VI',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '15.10 - 15.30 WITA', 
+      time: '14.45 - 15.05 WITA', 
       title: 'Sambutan Wakil Menteri Dalam Negeri, Ibu Ribka Haluk',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '15.30 - 16.00 WITA', 
+      time: '15.05 - 15.35 WITA', 
+      title: 'Sambutan Anggota VI BPK',
+      location: 'Auditorium Bima',
+      description: ''
+    },
+    { 
+      time: '15.35 - 16.05 WITA', 
       title: 'Dialog Anggota VI BPK dan Wamendagri dengan para Gubernur',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '16.00 - 16.30 WITA', 
-      title: 'Penyerahan Surat Tugas Pemeriksaan secara simbolis',
-      location: 'Auditorium Bima',
-      description: 'a. Secara simbolis Kalimantan Timur mewakili seluruh provinsi\nb. Secara simbolis Bali sebagai tuan rumah'
-    },
-    { 
-      time: '16.15 - 16.20 WITA', 
-      title: 'Penutup',
+      time: '16.05 - 16.20 WITA', 
+      title: 'Penyerahan Surat Tugas Pemeriksaan LKPD Tahun 2025 dan Foto Bersama',
       location: 'Auditorium Bima',
       description: ''
     },
     { 
-      time: '16.20 - 17.20 WITA', 
-      title: 'Pembubaran Acara',
-      location: 'Lobby',
-      description: 'Dengan pengaturan urutan sebagai berikut:\na. Gubernur Bali\nb. Anggota VI BPK dan Dirjen PKN VI BPK didampingi Direktur di Lingkungan DJPKN VI\nc. Para Gubernur Wilayah Kalimantan\nd. Para Gubernur Wilayah Maluku\ne. Para Gubernur Wilayah Nusa Tenggara\nf. Para Gubernur Wilayah Sulawesi\ng. Para Gubernur Wilayah Papua'
+      time: '16.20 - 16.35 WITA', 
+      title: 'Penutup',
+      location: 'Auditorium Bima',
+      description: ''
     }
   ];
 
@@ -549,6 +544,15 @@ const App = () => {
                   </div>
                   <span className="text-sm font-medium text-gray-700">Narahubung</span>
                 </button>
+                <button
+                  onClick={() => navigateTo('info', setIsMateriOpen, 'section-materi')}
+                  className="flex items-center gap-2.5 bg-white rounded-xl p-3.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div className="w-9 h-9 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-4.5 h-4.5 text-indigo-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Materi Kegiatan</span>
+                </button>
               </div>
             </div>
 
@@ -660,10 +664,19 @@ const App = () => {
                     </span>
                     <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isInfoUmumOpen ? 'rotate-90' : ''}`} />
                 </button>
-                <div className={`transition-all duration-300 ease-in-out ${isInfoUmumOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-                    <div className="p-4 pt-0">
+                <div className={`transition-all duration-300 ease-in-out ${isInfoUmumOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                    <div className="p-4 pt-0 space-y-3">
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3.5 text-sm text-gray-700 leading-relaxed">
+                            <p className="mb-2">Sehubungan dengan keterbatasan tempat dan menghindari kepadatan saat kehadiran tamu undangan, berikut pembagian alur kedatangan:</p>
+                            <ol className="list-decimal list-outside ml-4 space-y-1.5">
+                                <li>Hanya Gubernur/Wakil Gubernur, Sekretaris Daerah, dan Inspektur yang diarahkan masuk gedung BPK Perwakilan Bali melalui Lobby.</li>
+                                <li>Kepala Perwakilan dan Kepala Bidang Pemeriksaan (hanya yang membidangi provinsi) standby di area Lobby untuk menunggu kedatangan tamu undangan.</li>
+                                <li>Tamu undangan lainnya diarahkan menuju area barat gedung BPK Perwakilan Bali pada tempat yang telah disediakan, melalui jalur sisi selatan gedung BPK Perwakilan Bali.</li>
+                            </ol>
+                            <p className="mt-2">Terima kasih.</p>
+                        </div>
                         <a 
-                            href="/Informasi%20Umum%20Entry%20Meeting%20LKPD%202025%20DJPKN%20VI%20per%2010%20Feb%20pk%2020.20.pdf" 
+                            href="/Informasi%20Umum%20Entry%20Meeting%20LKPD%202025%20DJPKN%20VI.pdf" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
@@ -767,9 +780,9 @@ const App = () => {
                  <div className="flex flex-col items-start">
                     <span className="flex items-center gap-2 font-semibold text-lg">
                       <Calendar className="w-5 h-5 text-yellow-700" />
-                      Rundown dan Materi Kegiatan
+                      Rundown Acara
                     </span>
-                    <span className="text-xs text-gray-400 ml-7">Klik untuk melihat detil acara dan lokasi.</span>
+                    <span className="text-xs text-gray-400 ml-7">Klik untuk melihat detil acara dan lokasi.<br /><strong className="font-bold">Kondisi rundown per 11 Februari 2026 15:06 WITA.</strong></span>
                  </div>
                  <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isRundownOpen ? 'rotate-90' : ''}`} />
               </button>
@@ -1169,7 +1182,94 @@ const App = () => {
                     </div>
                   </div>
                 </div>
+                {/* Tim Medis */}
+                <div>
+                  <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1.5">Tim Medis</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Ida Bagus Ketut Sidhastu</p>
+                        <p className="text-xs text-gray-500">082145927454</p>
+                      </div>
+                      <a href="https://wa.me/6282145927454" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">dr. Komang Citra Triani Putri</p>
+                        <p className="text-xs text-gray-500">081246583209</p>
+                      </div>
+                      <a href="https://wa.me/6281246583209" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">Dewa Ayu Trisnayanti Meranggi</p>
+                        <p className="text-xs text-gray-500">081353511123</p>
+                      </div>
+                      <a href="https://wa.me/6281353511123" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
+              </div>
+            </div>
+
+            {/* Materi Kegiatan */}
+            <div id="section-materi" className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+              <button
+                onClick={() => setIsMateriOpen(!isMateriOpen)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
+              >
+                <span className="flex items-center gap-2 font-semibold text-lg">
+                  <BookOpen className="w-5 h-5 text-yellow-700" />
+                  Materi Kegiatan
+                </span>
+                <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isMateriOpen ? 'rotate-90' : ''}`} />
+              </button>
+              <div className={`transition-all duration-300 ease-in-out ${isMateriOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+                <div className="p-4 pt-0 space-y-2">
+                  {[
+                    { name: 'Slide Sambutan Anggota VI BPK Entry Meeting LKPD 2025', ext: 'pdf', href: '/Slide%20Sambutan%20Anggota%20VI%20BPK%20Entry%20Meeting%20LKPD%202025.pdf' },
+                  ].map((file, i) => {
+                    const extColors = {
+                      pdf: 'bg-red-100 text-red-600',
+                      ppt: 'bg-orange-100 text-orange-600',
+                      pptx: 'bg-orange-100 text-orange-600',
+                      doc: 'bg-blue-100 text-blue-600',
+                      docx: 'bg-blue-100 text-blue-600',
+                      xls: 'bg-green-100 text-green-600',
+                      xlsx: 'bg-green-100 text-green-600',
+                      zip: 'bg-yellow-100 text-yellow-700',
+                      rar: 'bg-yellow-100 text-yellow-700',
+                      jpg: 'bg-pink-100 text-pink-600',
+                      png: 'bg-pink-100 text-pink-600',
+                      mp4: 'bg-purple-100 text-purple-600',
+                    };
+                    const colorClass = extColors[file.ext] || 'bg-gray-100 text-gray-600';
+                    return (
+                      <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2.5 border border-gray-100">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClass}`}>
+                          <span className="text-[10px] font-bold uppercase">{file.ext}</span>
+                        </div>
+                        <p className="text-sm font-medium text-gray-700 flex-1 min-w-0 leading-snug">{file.name}</p>
+                        <a
+                          href={file.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 bg-gray-700 hover:bg-gray-800 text-white text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-1.5 transition-colors"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          Lihat/Unduh
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
