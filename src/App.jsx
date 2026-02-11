@@ -1231,17 +1231,44 @@ const App = () => {
                 </span>
                 <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isMateriOpen ? 'rotate-90' : ''}`} />
               </button>
-              <div className={`transition-all duration-300 ease-in-out ${isMateriOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+              <div className={`transition-all duration-300 ease-in-out ${isMateriOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                 <div className="p-4 pt-0 space-y-2">
-                  <a
-                    href="/Slide%20Sambutan%20Anggota%20VI%20BPK%20Entry%20Meeting%20LKPD%202025.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-gray-700 text-white py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
-                  >
-                    <FileText className="w-4 h-4" />
-                    Slide Sambutan Anggota VI BPK (PDF)
-                  </a>
+                  {[
+                    { name: 'Slide Sambutan Anggota VI BPK Entry Meeting LKPD 2025', ext: 'pdf', href: '/Slide%20Sambutan%20Anggota%20VI%20BPK%20Entry%20Meeting%20LKPD%202025.pdf' },
+                  ].map((file, i) => {
+                    const extColors = {
+                      pdf: 'bg-red-100 text-red-600',
+                      ppt: 'bg-orange-100 text-orange-600',
+                      pptx: 'bg-orange-100 text-orange-600',
+                      doc: 'bg-blue-100 text-blue-600',
+                      docx: 'bg-blue-100 text-blue-600',
+                      xls: 'bg-green-100 text-green-600',
+                      xlsx: 'bg-green-100 text-green-600',
+                      zip: 'bg-yellow-100 text-yellow-700',
+                      rar: 'bg-yellow-100 text-yellow-700',
+                      jpg: 'bg-pink-100 text-pink-600',
+                      png: 'bg-pink-100 text-pink-600',
+                      mp4: 'bg-purple-100 text-purple-600',
+                    };
+                    const colorClass = extColors[file.ext] || 'bg-gray-100 text-gray-600';
+                    return (
+                      <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2.5 border border-gray-100">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClass}`}>
+                          <span className="text-[10px] font-bold uppercase">{file.ext}</span>
+                        </div>
+                        <p className="text-sm font-medium text-gray-700 flex-1 min-w-0 leading-snug">{file.name}</p>
+                        <a
+                          href={file.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 bg-gray-700 hover:bg-gray-800 text-white text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-1.5 transition-colors"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          Lihat/Unduh
+                        </a>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
